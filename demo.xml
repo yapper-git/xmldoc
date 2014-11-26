@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extract>
+  <h1>Header 1</h1>
+  <p>First paragraph.<br/>Break line.</p>
+  <p align="center">
+    Second paragraph.
+    <b>bold</b> ;
+    <i>italic</i> ;
+    <b><i>bold and italic</i></b> ;
+    <mark>highlight</mark>...
+  </p>
+  <ul>
+    <li>Item <i>1</i></li>
+    <li>Item <i>2</i></li>
+    <li>Item <i>n</i></li>
+  </ul>
+  <table>
+    <tr>
+      <td><i>A</i>(0,0)</td>
+      <td><i>A</i>(0,1)</td>
+    </tr>
+    <tr>
+      <td><i>A</i>(1,0)</td>
+      <td><i>A</i>(1,1)</td>
+    </tr>
+  </table>
+</extract>
