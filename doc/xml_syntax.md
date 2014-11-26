@@ -2,30 +2,19 @@
 
 ## Blocks
 
-### Headers
+### Headers (`h1`, `h2`, `h3`, `h4`)
 
-`h1`, `h2`, `h3`, `h4`
+Headers must only contain text (no inline formatting).
 
-### Paragraph
+### Paragraph (`p`)
 
-`p` : paragraph
+By default, the text is left align.
+To *center*, set `align` attribute  to `center`.
+To *align right*, set `align` attribute to `right`.
 
-Alignement:
-* Default is align left
-* Center: `align="center"`
-* Align right: `align="right"`
+### Blockquote (`blockquote`)
 
-### Blockquote
-
-`blockquote`
-
-### Table
-
-margin:auto!
-
-* `table`
-* `tr`
-* `td` (`rowspan`, `colspan`)
+`blockquote` element must contains at least one paragraph.
 
 ### Lists
 
@@ -37,6 +26,16 @@ margin:auto!
     + `lower-roman` (i, ii, iii, iv etc.)
     + `upper-roman` (I, II, III, IV etc.)
 * `li` : list item
+
+No nesting support for now
+
+### Table (`table`)
+
+Tables are block, center in the middle of the page (like `margin:auto` in CSS).
+
+Table row: `tr`
+
+Table cell (header): `td`, `th` (`align[center|right]`, `rowspan`, `colspan`)
 
 ## Inline
 
