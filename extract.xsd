@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-<!-- Document -->
+<!-- Root element -->
 
     <xsd:element name="extract">
         <xsd:complexType>
@@ -36,7 +36,7 @@
 
 <!-- Paragraph -->
 
-    <xsd:element name="p"><!-- type="inline"/>-->
+    <xsd:element name="p">
         <xsd:complexType mixed="true">
             <xsd:sequence>
                 <xsd:group ref="inlineGroup" minOccurs="0" maxOccurs="unbounded"/>
@@ -44,15 +44,6 @@
             <xsd:attribute ref="align"/>
         </xsd:complexType>
     </xsd:element>
-
-    <xsd:attribute name="align">
-        <xsd:simpleType>
-            <xsd:restriction base="xsd:string">
-                <xsd:enumeration value="center"/>
-                <xsd:enumeration value="right"/>
-            </xsd:restriction>
-        </xsd:simpleType>
-    </xsd:attribute>
 
 <!-- Blockquote -->
 
@@ -79,16 +70,7 @@
             <xsd:choice>
                 <xsd:element ref="li" maxOccurs="unbounded"/>
             </xsd:choice>
-            <xsd:attribute name="type">
-                <xsd:simpleType>
-                    <xsd:restriction base="xsd:string">
-                        <xsd:enumeration value="lower-alpha"/>
-                        <xsd:enumeration value="upper-alpha"/>
-                        <xsd:enumeration value="lower-roman"/>
-                        <xsd:enumeration value="upper-roman"/>
-                    </xsd:restriction>
-                </xsd:simpleType>
-            </xsd:attribute>
+            <xsd:attribute ref="listType"/>
         </xsd:complexType>
     </xsd:element>
 
@@ -136,6 +118,28 @@
         <xsd:attribute ref="rowspan"/>
     </xsd:complexType>
 
+<!-- Attributes -->
+
+    <xsd:attribute name="listType">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="lower-alpha"/>
+                <xsd:enumeration value="upper-alpha"/>
+                <xsd:enumeration value="lower-roman"/>
+                <xsd:enumeration value="upper-roman"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:attribute>
+
+    <xsd:attribute name="align">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="center"/>
+                <xsd:enumeration value="right"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:attribute>
+
     <xsd:attribute name="rowspan">
         <xsd:simpleType>
             <xsd:restriction base="xsd:integer">
@@ -152,7 +156,7 @@
         </xsd:simpleType>
     </xsd:attribute>
 
-<!-- Inline -->
+<!-- Inline Group -->
 
     <xsd:group name="inlineGroup">
         <xsd:choice>
@@ -165,11 +169,15 @@
         </xsd:choice>
     </xsd:group>
 
+<!-- Inline Type -->
+
     <xsd:complexType name="inline" mixed="true">
         <xsd:sequence>
             <xsd:group ref="inlineGroup" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
+
+<!-- Inline elements -->
 
     <xsd:element name="br"/>
     <xsd:element name="b" type="inline"/>
