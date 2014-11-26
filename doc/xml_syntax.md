@@ -9,7 +9,9 @@
 ### Paragraph
 
 `p` : paragraph
-* Default == align left
+
+Alignement:
+* Default is align left
 * Center: `align="center"`
 * Align right: `align="right"`
 
@@ -19,9 +21,11 @@
 
 ### Table
 
-* table
-* tr
-* td (rowspan, colspan, align)
+margin:auto!
+
+* `table`
+* `tr`
+* `td` (`rowspan`, `colspan`)
 
 ### Lists
 
@@ -36,6 +40,7 @@
 
 ## Inline
 
+* `br` : line break
 * `b` : bold
 * `i` : italic
 * `sup` : superscript
