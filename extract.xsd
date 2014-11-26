@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<!-- Document -->
+
+    <xsd:element name="extract">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="blockGroup" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+<!-- Block Group -->
+
+    <xsd:group name="blockGroup">
+        <xsd:choice>
+            <xsd:element ref="h1"/>
+            <xsd:element ref="h2"/>
+            <xsd:element ref="h3"/>
+            <xsd:element ref="h4"/>
+            <xsd:element ref="p"/>
+            <xsd:element ref="blockquote"/>
+            <xsd:element ref="ul"/>
+            <xsd:element ref="ol"/>
+            <xsd:element ref="table"/>
+        </xsd:choice>
+    </xsd:group>
+
+<!-- Headings -->
+
+    <xsd:element name="h1" type="xsd:string"/>
+    <xsd:element name="h2" type="xsd:string"/>
+    <xsd:element name="h3" type="xsd:string"/>
+    <xsd:element name="h4" type="xsd:string"/>
+
+<!-- Paragraph -->
+
+    <xsd:element name="p"><!-- type="inline"/>-->
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:group ref="inlineGroup" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute ref="align"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:attribute name="align">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="center"/>
+                <xsd:enumeration value="right"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:attribute>
+
+<!-- Blockquote -->
+
+    <xsd:element name="blockquote">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element ref="p" maxOccurs="unbounded"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+
+<!-- Lists -->
+
+    <xsd:element name="ul">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element ref="li" maxOccurs="unbounded"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="ol">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element ref="li" maxOccurs="unbounded"/>
+            </xsd:choice>
+            <xsd:attribute name="type">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="lower-alpha"/>
+                        <xsd:enumeration value="upper-alpha"/>
+                        <xsd:enumeration value="lower-roman"/>
+                        <xsd:enumeration value="upper-roman"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="li">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                    <xsd:group ref="inlineGroup"/>
+                    <!--<xsd:element ref="ul"/>
+                    <xsd:element ref="ol"/>-->
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+<!-- Table -->
+
+    <xsd:element name="table">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element ref="tr" maxOccurs="unbounded"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="tr">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element ref="th" maxOccurs="unbounded"/>
+                <xsd:element ref="td" maxOccurs="unbounded"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="td" type="tableCell"/>
+
+    <xsd:element name="th" type="tableCell"/>
+
+    <xsd:complexType name="tableCell" mixed="true">
+        <xsd:sequence>
+            <xsd:group ref="inlineGroup" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute ref="align"/>
+        <xsd:attribute ref="colspan"/>
+        <xsd:attribute ref="rowspan"/>
+    </xsd:complexType>
+
+    <xsd:attribute name="rowspan">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+                <xsd:minInclusive value="2"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:attribute>
+
+    <xsd:attribute name="colspan">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+                <xsd:minInclusive value="2"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:attribute>
+
+<!-- Inline -->
+
+    <xsd:group name="inlineGroup">
+        <xsd:choice>
+            <xsd:element ref="br"/>
+            <xsd:element ref="b"/>
+            <xsd:element ref="i"/>
+            <xsd:element ref="sup"/>
+            <xsd:element ref="sub"/>
+            <xsd:element ref="mark"/>
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:complexType name="inline" mixed="true">
+        <xsd:sequence>
+            <xsd:group ref="inlineGroup" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="br"/>
+    <xsd:element name="b" type="inline"/>
+    <xsd:element name="i" type="inline"/>
+    <xsd:element name="sup" type="inline"/>
+    <xsd:element name="sub" type="inline"/>
+    <xsd:element name="mark" type="inline"/>
+
+</xsd:schema>
