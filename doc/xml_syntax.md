@@ -12,7 +12,7 @@ By default, the text is left align.
 To *center*, set `align` attribute  to `center`.
 To *align right*, set `align` attribute to `right`.
 
-### Blockquote: `blockquote`
+### Blockquote
 
 `blockquote` element must contains at least one paragraph.
 
@@ -29,7 +29,7 @@ To *align right*, set `align` attribute to `right`.
 
 No nesting support for now
 
-### Table: `table`
+### Table
 
 Tables are block, center in the middle of the page (like `margin:auto` in CSS).
 
