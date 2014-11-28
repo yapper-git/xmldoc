@@ -1,27 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extract>
-  <h1>Header 1</h1>
-  <p>First paragraph.<br/>Break line.</p>
-  <p align="center">
-    Second paragraph.
-    <b>bold</b> ;
-    <i>italic</i> ;
-    <b><i>bold and italic</i></b> ;
-    <mark>highlight</mark>...
+
+  <!-- Headings -->
+  <h1>Headings</h1>
+  <h2>Level 2</h2>
+  <h3>Level 3</h3>
+  <h4>Level 4</h4>
+
+  <!-- Paragraphs -->
+  <h2>Paragraphs</h2>
+  <p>
+    Quam ob rem id primum videamus, si placet, quatenus amor in amicitia
+    progredi debeat. Numne, si Coriolanus habuit amicos, ferre contra patriam
+    arma illi cum Coriolano debuerunt? num Vecellinum amici regnum adpetentem,
+    num Maelium debuerunt iuvare?
   </p>
+  <p align="center">
+    Eodem tempore etiam Hymetii praeclarae indolis viri negotium est actitatum,
+    cuius hunc novimus esse textum. cum Africam pro consule regeret
+    Carthaginiensibus victus inopia iam lassatis, ex horreis Romano populo
+    destinatis frumentum dedit, pauloque postea cum provenisset segetum copia,
+    integre sine ulla restituit mora.
+  </p>
+  <p align="right">
+    Tantum autem cuique tribuendum, primum quantum ipse efficere possis, deinde
+    etiam quantum ille quem diligas atque adiuves, sustinere. Non enim neque tu
+    possis, quamvis excellas, omnes tuos ad honores amplissimos perducere, ut
+    Scipio P. Rupilium potuit consulem efficere, fratrem eius L. non potuit.
+    Quod si etiam possis quidvis deferre ad alterum, videndum est tamen,
+    quid ille possit sustinere.
+  </p>
+
+  <!-- Blockquotes -->
+  <blockquote>
+    <p>
+      Ut enim benefici liberalesque sumus, non ut exigamus gratiam (neque enim
+      beneficium faeneramur sed natura propensi ad liberalitatem sumus), sic
+      amicitiam non spe mercedis adducti sed quod omnis eius fructus in ipso
+      amore inest, expetendam putamus.
+    </p>
+    <p>
+      Proinde concepta rabie saeviore, quam desperatio incendebat et fames,
+      amplificatis viribus ardore incohibili in excidium urbium matris Seleuciae
+      efferebantur, quam comes tuebatur Castricius tresque legiones bellicis
+      sudoribus induratae.
+    </p>
+  </blockquote>
+
+  <!-- Lists -->
   <ul>
-    <li>Item <i>1</i></li>
-    <li>Item <i>2</i></li>
-    <li>Item <i>n</i></li>
+    <li>Item (first)</li>
+    <li>Item (second)</li>
+    <li>Item (third)</li>
   </ul>
+  <ol>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+  </ol>
+  <ol type="lower-alpha">
+    <li>Item a</li>
+    <li>Item b</li>
+    <li>Item c</li>
+  </ol>
+  <ol type="upper-alpha">
+    <li>Item A</li>
+    <li>Item B</li>
+    <li>Item C</li>
+  </ol>
+  <ol type="lower-roman">
+    <li>Item i</li>
+    <li>Item ii</li>
+    <li>Item iii</li>
+  </ol>
+  <ol type="upper-roman">
+    <li>Item I</li>
+    <li>Item II</li>
+    <li>Item III</li>
+  </ol>
+
+  <!-- Tables -->
+  <h1>Tables</h1>
   <table>
     <tr>
-      <td><i>A</i>(0,0)</td>
-      <td><i>A</i>(0,1)</td>
+      <th>(1, 1)</th>
+      <th>(1, 2)</th>
+      <th>(1, 3)</th>
     </tr>
     <tr>
-      <td><i>A</i>(1,0)</td>
-      <td><i>A</i>(1,1)</td>
+      <td>(2, 1)</td>
+      <td>(2, 2)</td>
+      <td>(2, 3)</td>
+    </tr>
+    <tr>
+      <td>(3, 1)</td>
+      <td>(3, 2)</td>
+      <td>(3, 3)</td>
     </tr>
   </table>
+
+  <!-- Inline format -->
+  <h1>Inline Format</h1>
+  <ul>
+    <li>bold: <b>foo</b></li>
+    <li>italic: <i>foo</i></li>
+    <li>mark: <mark>foo</mark></li>
+    <li>bold and italic: <b>foo <i>bar</i></b></li>
+    <li>mark and italic: <mark>foo <i>bar</i></mark></li>
+  </ul>
+
+  <!-- XML escapement -->
+  <h1>XML escapement</h1>
+  <ul>
+    <li>&amp;amp; ⇒ &amp;</li>
+    <li>&amp;apos; ⇒ &apos;</li>
+    <li>&amp;quot; ⇒ &quot;</li>
+    <li>&amp;lt; ⇒ &lt;</li>
+    <li>&amp;gt; ⇒ &gt;</li>
+  </ul>
+
 </extract>
