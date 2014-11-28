@@ -13,10 +13,10 @@ parser.add_argument("file", help="path to XML file")
 args = parser.parse_args()
 
 xsd_doc = etree.parse(XML_SCHEMA)
+xmlschema = etree.XMLSchema(xsd_doc)
 
 try:
     xml_doc = etree.parse(args.file)
-    xmlschema = etree.XMLSchema(xsd_doc)
     xmlschema.assertValid(xml_doc)
 except OSError as exception:
     print(exception, file=sys.stderr)
