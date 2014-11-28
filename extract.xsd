@@ -70,7 +70,7 @@
             <xsd:choice>
                 <xsd:element ref="li" maxOccurs="unbounded"/>
             </xsd:choice>
-            <xsd:attribute ref="listType"/>
+            <xsd:attribute ref="type"/>
         </xsd:complexType>
     </xsd:element>
 
@@ -120,7 +120,7 @@
 
 <!-- Attributes -->
 
-    <xsd:attribute name="listType">
+    <xsd:attribute name="type">
         <xsd:simpleType>
             <xsd:restriction base="xsd:string">
                 <xsd:enumeration value="lower-alpha"/>
