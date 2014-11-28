@@ -1,22 +1,32 @@
 #!/usr/bin/env python
 
-import sys
+import argparse
 from lxml import etree
+import os
+import sys
 
-xmlschema_doc = etree.parse("extract.xsd")
+XML_SCHEMA = "extract.xsd"
 
-xml_filename = sys.argv[1]
+parser = argparse.ArgumentParser()
+parser.add_argument("--verbose", "-v", help="FIXME", action="store_true")
+parser.add_argument("file", help="path to XML file")
+args = parser.parse_args()
+
+xsd_doc = etree.parse(XML_SCHEMA)
 
 try:
-    xml_doc = etree.parse(xml_filename)
-    xmlschema = etree.XMLSchema(xmlschema_doc)
+    xml_doc = etree.parse(args.file)
+    xmlschema = etree.XMLSchema(xsd_doc)
     xmlschema.assertValid(xml_doc)
-    print("validates")
-except etree.XMLSyntaxError as e:
-    # XML not well formed
-    print(e)
+except OSError as exception:
+    print(exception)
     sys.exit(1)
-except etree.DocumentInvalid as e:
-    # No not conform XML Schema Definition
-    print(e)
+except etree.XMLSyntaxError as exception:
+    print(exception)
     sys.exit(2)
+except etree.DocumentInvalid as exception:
+    print(exception)
+    sys.exit(3)
+
+print("validates")
+sys.exit(0)
