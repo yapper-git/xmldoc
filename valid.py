@@ -8,7 +8,6 @@ import sys
 XML_SCHEMA = "extract.xsd"
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--verbose", "-v", help="FIXME", action="store_true")
 parser.add_argument("file", help="path to XML file")
 args = parser.parse_args()
 
