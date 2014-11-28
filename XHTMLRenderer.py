@@ -1,16 +1,22 @@
 class XHTMLRenderer:
     
+    def text(self, text):
+        text = text.replace("&", "&amp;")
+        text = text.replace("<", "&lt;")
+        text = text.replace(">", "&gt;")
+        return text
+    
     def header(self, text, level):
         return "<h{0}>{1}</h{0}>".format(level, text)
     
     def paragraph(self, text, align):
         if align == "left":
-            return "<p>" + text + "</p>"
+            return "<p>{}</p>".format(text)
         else:
-            return '<p style="text-align: ' + align + '">' + text + "</p>"
+            return '<p style="text-align: {}">{}</p>'.format(align, text)
     
     def blockquote(self, text):
-        return "<blockquote>" + text + "</blockquote>"
+        return "<blockquote>{}</blockquote>".format(text)
     
     def orderedList(self, text, listType):
         return '<ol style="list-style-type: {}">{}</ol>'.format(listType, text)
@@ -39,16 +45,16 @@ class XHTMLRenderer:
         return "<br />"
     
     def bold(self, text):
-        return "<strong>" + text + "</strong>"
+        return "<strong>{}</strong>".format(text)
     
     def italic(self, text):
-        return "<em>" + text + "</em>"
+        return "<em>{}</em>".format(text)
     
     def superscript(self, text):
-        return "<sup>" + text + "</sup>"
+        return "<sup>{}</sup>".format(text)
     
     def subscript(self, text):
-        return "<sub>" + text + "</sub>"
+        return "<sub>{}</sub>".format(text)
     
     def highlight(self, text):
-        return "<mark>" + text + "</mark>"
+        return "<mark>{}</mark>".format(text)

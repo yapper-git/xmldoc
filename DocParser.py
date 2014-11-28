@@ -26,7 +26,7 @@ class DocParser:
     
     def header(self, element):
         level = int(element.tag[1])
-        return self.renderer.header(element.text, level)
+        return self.renderer.header(self.renderer.text(element.text), level)
     
     def paragraph(self, element):
         align = element.get("align", "left")
@@ -91,10 +91,10 @@ class DocParser:
             "sub":  self.subscript,
             "mark": self.highlight
         }
-        text = element.text if element.text else ""
+        text = self.renderer.text(element.text) if element.text else ""
         for child in element:
             text += match[child.tag](child)
-            text += child.tail if child.tail else ""
+            text += self.renderer.text(child.tail) if child.tail else ""
         return text
     
     def linebreak(self, element):
