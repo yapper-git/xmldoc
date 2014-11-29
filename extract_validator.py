@@ -11,7 +11,8 @@ parser = argparse.ArgumentParser(description="Validates XML extract against XML 
 parser.add_argument("file", help="path to XML file")
 args = parser.parse_args()
 
-xsd_doc = etree.parse(XML_SCHEMA)
+absolute_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), XML_SCHEMA)
+xsd_doc = etree.parse(absolute_path)
 xmlschema = etree.XMLSchema(xsd_doc)
 
 try:
