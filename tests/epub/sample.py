@@ -1,6 +1,7 @@
 import epub2
 
 epub = epub2.Epub("sample.epub")
+epub.open()
 
 epub.identifier = "sample"
 epub.title = "Sample ePUB file"

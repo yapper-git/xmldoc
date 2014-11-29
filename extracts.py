@@ -16,6 +16,7 @@ EXTRACTS = [
 ]
 
 epub = epub2.Epub(OUTPUT)
+epub.open()
 
 epub.identifier = IDENTIFIER
 epub.title = TITLE
