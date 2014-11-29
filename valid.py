@@ -17,14 +17,8 @@ xmlschema = etree.XMLSchema(xsd_doc)
 try:
     xml_doc = etree.parse(args.file)
     xmlschema.assertValid(xml_doc)
-except OSError as exception:
+except Exception as exception:
     print(exception, file=sys.stderr)
     sys.exit(1)
-except etree.XMLSyntaxError as exception:
-    print(exception, file=sys.stderr)
-    sys.exit(2)
-except etree.DocumentInvalid as exception:
-    print(exception, file=sys.stderr)
-    sys.exit(3)
 
 print("validates")
