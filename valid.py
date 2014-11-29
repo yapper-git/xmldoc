@@ -7,7 +7,7 @@ import sys
 
 XML_SCHEMA = "extract.xsd"
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description="Validates XML extract against XML Schema Definition (XSD).")
 parser.add_argument("file", help="path to XML file")
 args = parser.parse_args()
 

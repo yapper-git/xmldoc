@@ -11,8 +11,8 @@ from XHTMLRenderer import *
 def error(message):
     print("ERROR:", message, file=sys.stderr)
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--force", "-f", help="force output overwrite", action="store_true")
+parser = argparse.ArgumentParser(descrption="Converts XML extract to XHTML.")
+parser.add_argument("-f", "--force", help="force output overwrite", action="store_true")
 parser.add_argument("input", help="path to input file")
 parser.add_argument("output", help="path to output file")
 args = parser.parse_args()
