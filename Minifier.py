@@ -19,14 +19,18 @@ class Minifier:
         tagList = ["h1", "h2", "h3", "h4", "p", "li", "td", "th"]
         for tag in tagList:
             for element in self._root.findall(".//" + tag):
+                self.strip(element)
                 self.mergeWhiteSpaces(element)
         
         return self._tree
     
     def strip(self, element):
-        re.sub("^\s+", "", element.text)
-        
-        re.sub("^\s+", "", element.tail)
+        element.text = element.text.lstrip()
+        children = list(element)
+        if len(children) == 0:
+            element.text = element.text.rstrip()
+        elif children[len(children)-1].tail:
+            children[len(children)-1].tail = children[len(children)-1].tail.rstrip()
     
     def mergeWhiteSpaces(self, element):
         element.text = self._regex.sub(" ", element.text)

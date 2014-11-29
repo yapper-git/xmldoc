@@ -15,38 +15,41 @@ class MarkdownRenderer:
         return self.wrap(("#" * level) + " " + text) + "\n\n"
     
     def paragraph(self, text, align):
+        text = self.wrap(text)
         if align == "right":
-            return "{0:>{1}}".format(self.wrap(text), self.width) + "\n\n"
+            lines = text.split("\n")
+            lines = ["{0:>{1}}".format(line, self.width) for line in lines]
+            return "\n".join(lines) + "\n\n"
         elif align == "center":
-            return self.wrap(text).center(self.width) + "\n\n"
+            lines = text.split("\n")
+            lines = [line.center(self.width) for line in lines]
+            return "\n".join(lines) + "\n\n"
         else:
-            return self.wrap(text) + "\n\n"
+            return text + "\n\n"
     
     def blockquote(self, text):
-        return "> " + textwrap.fill(text, self.width-2).replace("\n", "\n> ")
+        return "> " + textwrap.fill(text, self.width-2).replace("\n", "\n> ") + "\n\n"
     
     def orderedList(self, text, listType):
-        return '<ol style="list-style-type: {}">{}</ol>'.format(listType, text)
+        return text + "\n"
     
     def unorderedList(self, text):
-        return "\n".format(text)
+        return text + "\n"
     
     def listItem(self, text):
-        return "* {}".format(text)
+        return "* {}".format(text)+"\n"
     
     def table(self, text):
-        return "<table>{}</table>".format(text)
+        return ""
     
     def tableRow(self, text):
-        return "<tr>{}</tr>".format(text)
+        return ""
     
     def tableCell(self, text, align, colspan, rowspan):
-        # TODO colspan, rowspan, align support
-        return '<td>{}</td>'.format(text)
+        return ""
     
     def tableCellHeader(self, text, align, colspan, rowspan):
-        # TODO colspan, rowspan, align support
-        return '<th>{}</th>'.format(text)
+        return ""
     
     def linebreak(self):
         return "<br />"
