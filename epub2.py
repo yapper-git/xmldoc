@@ -170,11 +170,14 @@ class Epub:
         self.guide = Guide()
         self.contents = Contents()
         
-        self._zip = zipfile.ZipFile(filePath, "w")
+        self._filePath = filePath
+        self.manifest.addItem("ncx", "toc.ncx", "application/x-dtbncx+xml")
+
+    def open(self):
+        self._zip = zipfile.ZipFile(self._filePath, "w")
         self._writeMimetypeFile()
         self._writeContainerFile()
-        self.manifest.addItem("ncx", "toc.ncx", "application/x-dtbncx+xml")
-    
+
     def close(self):
         if not self.identifier:
             raise ValueError("identifier required")
@@ -187,6 +190,14 @@ class Epub:
         self._writeOpfFile()
         self._writeNcxFile()
         self._zip.close()
+
+    def __enter__(self):
+        self.open()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+        return False
     
     def addFileFromFile(self, localname, filename, id, mediaType):
         self._zip.write(filename, "OEBPS/" + localname)
