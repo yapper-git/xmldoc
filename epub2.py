@@ -22,64 +22,64 @@ class Metadata:
         self._rights = None
         self._metas = []
 
-    def addTitle(self, title):
+    def add_title(self, title):
         self._titles.append(title)
 
-    def addCreator(self, name, role=None, fileAs=None):
+    def add_creator(self, name, role=None, file_as=None):
         self._creators.append({
             "name": name,
             "role": role,
-            "fileAs": fileAs
+            "fileAs": file_as
         })
 
-    def addSubject(self, subject):
+    def add_subject(self, subject):
         self._subjects.append(subject)
 
-    def setDescription(self, description):
+    def set_description(self, description):
         self._description = description
 
-    def setPublisher(self, publisher):
+    def set_publisher(self, publisher):
         self._publisher = publisher
 
-    def addContributor(self, name, role=None, fileAs=None):
+    def add_contributor(self, name, role=None, file_as=None):
         self._contributors.append({
             "name": name,
             "role": role,
-            "fileAs": fileAs
+            "fileAs": file_as
         })
 
-    def addDate(self, date, event=None):
+    def add_date(self, date, event=None):
         self._dates.append({"date": date, "event": event})
 
-    def setType(self, type):
+    def set_type(self, type):
         self._type = type
 
-    def setFormat(self, format):
+    def set_format(self, format):
         self._format = format
 
-    def addIdentifier(self, content, id=None, scheme=None):
+    def add_identifier(self, content, id=None, scheme=None):
         self._identifiers.append({
             "content": content,
             "id": id,
             "scheme": scheme
         })
 
-    def setSource(self, source):
+    def set_source(self, source):
         self._source = source
 
-    def addLanguage(self, language):
+    def add_language(self, language):
         self._languages.append(language)
 
-    def setRelation(self, relation):
+    def set_relation(self, relation):
         self._relation = relation
 
-    def setCoverage(self, coverage):
+    def set_coverage(self, coverage):
         self._coverage = coverage
 
-    def setRights(self, rights):
+    def set_rights(self, rights):
         self._rights = rights
 
-    def addMeta(self, name, content):
+    def add_meta(self, name, content):
         self._metas.append({"name": name, "content": content})
 
 
@@ -92,11 +92,11 @@ class Manifest:
     def __iter__(self):
         return iter(self._items)
 
-    def addItem(self, id, href, mediaType):
+    def add_item(self, id, href, media_type):
         self._items.append({
             "id": id,
             "href": href,
-            "mediaType": mediaType
+            "mediaType": media_type
         })
 
 
@@ -109,7 +109,7 @@ class Spine:
     def __iter__(self):
         return iter(self._itemrefs)
 
-    def addItemref(self, idref, linear=True):
+    def add_itemref(self, idref, linear=True):
         self._itemrefs.append({"idref": idref, "linear": linear})
 
 
@@ -122,7 +122,7 @@ class Guide:
     def __iter__(self):
         return iter(self._references)
 
-    def addReference(self, type, title, href):
+    def add_reference(self, type, title, href):
         self._references.append({
             "type": type,
             "title": title,
@@ -133,10 +133,10 @@ class Guide:
 class Contents:
 
     def __init__(self):
-        self._navPoints = []
+        self._navpoints = []
 
-    def addNavPoint(self, navPoint):
-        self._navPoints.append(navPoint)
+    def add_navpoint(self, navpoint):
+        self._navpoints.append(navpoint)
 
 
 class NavPoint:
@@ -144,15 +144,15 @@ class NavPoint:
 
     #_playOrder = 0
 
-    def __init__(self, id, label, source, navPoints=[]):
+    def __init__(self, id, label, source, navpoints=[]):
         self._id = id
         self._label = label
         self._source = source
-        self._navPoints = navPoints
+        self._navpoints = navpoints
         #self._playOrder = NavPoint.
 
-    def append(self, navPoint):
-        self._navPoints.append(navPoint)
+    def append(self, navpoint):
+        self._navpoints.append(navpoint)
 
 
 class Epub:
@@ -161,7 +161,7 @@ class Epub:
     tab = "\t"
     end = "\n"
 
-    def __init__(self, filePath):
+    def __init__(self, file_path):
         self.identifier = None
         self.title = None
         self.language = None
@@ -171,13 +171,13 @@ class Epub:
         self.guide = Guide()
         self.contents = Contents()
 
-        self._filePath = filePath
-        self.manifest.addItem("ncx", "toc.ncx", "application/x-dtbncx+xml")
+        self._file_path = file_path
+        self.manifest.add_item("ncx", "toc.ncx", "application/x-dtbncx+xml")
 
     def open(self):
-        self._zip = zipfile.ZipFile(self._filePath, "w")
-        self._writeMimetypeFile()
-        self._writeContainerFile()
+        self._zip = zipfile.ZipFile(self._file_path, "w")
+        self._write_mimetype_file()
+        self._write_container_file()
 
     def close(self):
         if not self.identifier:
@@ -186,10 +186,10 @@ class Epub:
             raise ValueError("title required")
         if not self.title:
             raise ValueError("language required")
-        if len(self.contents._navPoints) == 0:
-            raise ValueError("navPoint required")
-        self._writeOpfFile()
-        self._writeNcxFile()
+        if len(self.contents._navpoints) == 0:
+            raise ValueError("navpoint required")
+        self._write_opf_file()
+        self._write_ncx_file()
         self._zip.close()
 
     def __enter__(self):
@@ -200,44 +200,45 @@ class Epub:
         self.close()
         return False
 
-    def addFileFromFile(self, localname, filename, id, mediaType):
+    def add_file_from_file(self, localname, filename, id, media_type):
         self._zip.write(filename, "OEBPS/" + localname)
-        self.manifest.addItem(id, localname, mediaType)
+        self.manifest.add_item(id, localname, media_type)
 
-    def addFileFromString(self, localname, content, id, mediaType):
+    def add_file_from_string(self, localname, content, id, media_type):
         self._zip.writestr("OEBPS/" + localname, content)
-        self.manifest.addItem(id, localname, mediaType)
+        self.manifest.add_item(id, localname, media_type)
 
-    def addTextFromFile(self, localname, filename, id):
-        self.addFileFromFile(localname, filename, id, "application/xhtml+xml")
-        self.spine.addItemref(id)
+    def add_text_from_file(self, localname, filename, id):
+        self.add_file_from_file(localname, filename, id, "application/xhtml+xml")
+        self.spine.add_itemref(id)
 
-    def addTextFromString(self, localname, content, id):
-        self.addFileFromString(localname, content, id, "application/xhtml+xml")
-        self.spine.addItemref(id)
+    def add_text_from_string(self, localname, content, id):
+        self.add_file_from_string(localname, content, id, "application/xhtml+xml")
+        self.spine.add_itemref(id)
 
-    def addStyleFromFile(self, localname, filename, id):
-        self.addFileFromFile(localname, filename, id, "text/css")
+    def add_style_from_file(self, localname, filename, id):
+        self.add_file_from_file(localname, filename, id, "text/css")
 
-    def addStyleFromString(self, localname, content, id):
-        self.addFileFromString(localname, content, id, "text/css")
+    def add_style_from_string(self, localname, content, id):
+        self.add_file_from_string(localname, content, id, "text/css")
 
-    def _writeMimetypeFile(self):
+    def _write_mimetype_file(self):
         self._zip.writestr("mimetype", "application/epub+zip")
 
-    def _writeContainerFile(self):
+    def _write_container_file(self):
         self._zip.writestr(
             "META-INF/container.xml",
             '<?xml version="1.0" encoding="{encoding}"?>{end}'
             '<container version="1.0" xmlns="{xmlns}">{end}'
             '{tab}<rootfiles>{end}'
-            '{tab}{tab}<rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>{end}'
+            '{tab}{tab}<rootfile full-path="OEBPS/content.opf"'
+            ' media-type="application/oebps-package+xml"/>{end}'
             '{tab}</rootfiles>{end}'
             '</container>'.format(
                 xmlns="urn:oasis:names:tc:opendocument:xmlns:container",
                 encoding=Epub.encoding, tab=Epub.tab, end=Epub.end))
 
-    def _writeOpfFile(self):
+    def _write_opf_file(self):
         self._zip.writestr(
             "OEBPS/content.opf",
             '<?xml version="1.0" encoding="{encoding}"?>{end}'
@@ -257,12 +258,11 @@ class Epub:
                 encoding=Epub.encoding,
                 tab=Epub.tab,
                 end=Epub.end,
-                metadata="\n\t\t".join(self._metadataTags()),
-                manifest="\n\t\t".join(self._manifestTags()),
-                spine="\n\t\t".join(self._spineTags())
-            ))
+                metadata="\n\t\t".join(self._metadata_tags()),
+                manifest="\n\t\t".join(self._manifest_tags()),
+                spine="\n\t\t".join(self._spine_tags())))
 
-    def _writeNcxFile(self):
+    def _write_ncx_file(self):
         self._zip.writestr(
             "OEBPS/toc.ncx",
             '<?xml version="1.0" encoding="{encoding}"?>{end}'
@@ -286,17 +286,16 @@ class Epub:
                 end=Epub.end,
                 identifier=self.identifier,
                 depth=self.depth(),
-                navmap=self.renderNavMap()
-            ))
+                navmap=self.render_navmap()))
 
-    def _manifestTags(self):
+    def _manifest_tags(self):
         tags = []
         for item in self.manifest:
             tags.append('<item id="{}" href="{}" media-type="{}"/>'
                         .format(item["id"], item["href"], item["mediaType"]))
         return tags
 
-    def _spineTags(self):
+    def _spine_tags(self):
         tags = []
         for itemref in self.spine:  # FIXME ugly
             tag = '<itemref idref="{}"'.format(itemref["idref"])
@@ -306,14 +305,14 @@ class Epub:
             tags.append(tag)
         return tags
 
-    def _guideTags(self):
+    def _guide_tags(self):
         tags = []
         for type, title, href in self.guide:
             tags.append('<reference type="{}" title="{}" href="{}"/>'
                         .format(type, title, href))
         return tags
 
-    def _metadataTags(self):
+    def _metadata_tags(self):
         metadata = self.metadata
         tags = []
 
@@ -408,13 +407,13 @@ class Epub:
 
         return tags
 
-    def renderNavMap(self):
+    def render_navmap(self):
         buf = ""
-        for navPoint in self.contents._navPoints:
-            buf += self.renderNavPoint(navPoint, 2)
+        for navpoint in self.contents._navpoints:
+            buf += self.render_navpoint(navpoint, 2)
         return buf
 
-    def renderNavPoint(self, navPoint, level):
+    def render_navpoint(self, navpoint, level):
         # FIXME ugly
         # TODO implement playOrder
 
@@ -424,19 +423,19 @@ class Epub:
         buffer = ""
 
         # <navPoint id="..." playOrder="...">
-        buffer += (tab * level) + '<navPoint id="{}">'.format(navPoint._id) + end
+        buffer += (tab * level) + '<navPoint id="{}">'.format(navpoint._id) + end
 
         # <navLabel><text>...</text></navLabel>
         buffer += (tab * (level+1)) + '<navLabel>' + end
-        buffer += (tab * (level+2)) + '<text>' + navPoint._label + '</text>' + end
+        buffer += (tab * (level+2)) + '<text>' + navpoint._label + '</text>' + end
         buffer += (tab * (level+1)) + '</navLabel>' + end
 
         # <content src="..."/>
-        buffer += (tab * (level+1)) + '<content src="' + navPoint._source + '"/>' + end
+        buffer += (tab * (level+1)) + '<content src="' + navpoint._source + '"/>' + end
 
         # <navPoint>...</navPoint> if children
-        for childNavPoint in navPoint._navPoints:
-            buffer += self.renderNavPoint(childNavPoint, level+1)
+        for child_navpoint in navpoint._navpoints:
+            buffer += self.render_navpoint(child_navpoint, level+1)
 
         # </navPoint>
         buffer += (tab * level) + '</navPoint>' + end
@@ -444,23 +443,23 @@ class Epub:
         return buffer
 
     def depth(self):
-        maxDepth = 0
-        for navPoint in self.contents._navPoints:
-            depth = self.depthRec(navPoint, 1)
-            if depth > maxDepth:
-                maxDepth = depth
-        return maxDepth
+        max_depth = 0
+        for navpoint in self.contents._navpoints:
+            depth = self.depth_rec(navpoint, 1)
+            if depth > max_depth:
+                max_depth = depth
+        return max_depth
 
-    def depthRec(self, navPoint, currentDepth):
-        navPoints = navPoint._navPoints
+    def depth_rec(self, navpoint, current_depth):
+        navpoints = navpoint._navpoints
 
-        if len(navPoints) == 0:
-            return currentDepth
+        if len(navpoints) == 0:
+            return current_depth
         else:
-            max = currentDepth
-            for childNavPoint in navPoints:
-                depth = self.depthRec(childNavPoint, currentDepth+1)
-                if depth > max:
-                    max = depth
-            return max
+            max_depth = current_depth
+            for child_navpoint in navpoints:
+                depth = self.depth_rec(child_navpoint, current_depth+1)
+                if depth > max_depth:
+                    max_depth = depth
+            return max_depth
 

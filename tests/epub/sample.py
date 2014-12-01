@@ -7,41 +7,41 @@ epub.identifier = "sample"
 epub.title = "Sample ePUB file"
 epub.language = "en-GB"
 
-epub.metadata.addTitle("Title N°2")
-epub.metadata.addTitle("Title N°3")
-epub.metadata.addCreator("Creator N°1")
-epub.metadata.addCreator("Creator N°2", role="aut")
-epub.metadata.addCreator("Creator N°3", fileAs="Creator 3", role="oth")
-epub.metadata.addSubject("Subject N°1")
-epub.metadata.addSubject("Subject N°2")
-epub.metadata.setDescription("Description")
-epub.metadata.addContributor("Contributor N°1")
-epub.metadata.addContributor("Contributor N°2", role="aut")
-epub.metadata.addContributor("Contributor N°3", fileAs="Contributor 3", role="oth")
-epub.metadata.addDate("2014")
-epub.metadata.addDate("2014-12", event="modification")
-epub.metadata.addDate("2014-12-25", event="publication")
-epub.metadata.setType("type")
-epub.metadata.setFormat("format")
-epub.metadata.addIdentifier("uuid002")
-epub.metadata.addIdentifier("uuid003", "myid", "scheme")
-epub.metadata.setSource("source")
-epub.metadata.addLanguage("en-US")
-epub.metadata.addLanguage("fr-fr")
-epub.metadata.addLanguage("de")
-epub.metadata.setRelation("relation")
-epub.metadata.setCoverage("coverage")
-epub.metadata.setRights("rights")
-epub.metadata.addMeta("name1", "content1")
-epub.metadata.addMeta("name2", "content2")
+epub.metadata.add_title("Title N°2")
+epub.metadata.add_title("Title N°3")
+epub.metadata.add_creator("Creator N°1")
+epub.metadata.add_creator("Creator N°2", role="aut")
+epub.metadata.add_creator("Creator N°3", file_as="Creator 3", role="oth")
+epub.metadata.add_subject("Subject N°1")
+epub.metadata.add_subject("Subject N°2")
+epub.metadata.set_description("Description")
+epub.metadata.add_contributor("Contributor N°1")
+epub.metadata.add_contributor("Contributor N°2", role="aut")
+epub.metadata.add_contributor("Contributor N°3", file_as="Contributor 3", role="oth")
+epub.metadata.add_date("2014")
+epub.metadata.add_date("2014-12", event="modification")
+epub.metadata.add_date("2014-12-25", event="publication")
+epub.metadata.set_type("type")
+epub.metadata.set_format("format")
+epub.metadata.add_identifier("uuid002")
+epub.metadata.add_identifier("uuid003", "myid", "scheme")
+epub.metadata.set_source("source")
+epub.metadata.add_language("en-US")
+epub.metadata.add_language("fr-fr")
+epub.metadata.add_language("de")
+epub.metadata.set_relation("relation")
+epub.metadata.set_coverage("coverage")
+epub.metadata.set_rights("rights")
+epub.metadata.add_meta("name1", "content1")
+epub.metadata.add_meta("name2", "content2")
 
-epub.guide.addReference(type="title-page", title="Title page", href="titlepage.xhtml")
-epub.guide.addReference(type="toc", title="Table of Contents", href="contents.xhtml")
+epub.guide.add_reference(type="title-page", title="Title page", href="titlepage.xhtml")
+epub.guide.add_reference(type="toc", title="Table of Contents", href="contents.xhtml")
 
-epub.contents.addNavPoint(epub2.NavPoint("chap1", "Chapter 1", "chapter1.xhtml"))
-epub.contents.addNavPoint(epub2.NavPoint("chap2", "Chapter 2", "chapter2.xhtml"))
+epub.contents.add_navpoint(epub2.NavPoint("chap1", "Chapter 1", "chapter1.xhtml"))
+epub.contents.add_navpoint(epub2.NavPoint("chap2", "Chapter 2", "chapter2.xhtml"))
 
-epub.addTextFromString(id="titlepage", localname="titlepage.xhtml", content="""<?xml version="1.0" encoding="UTF-8"?>
+epub.add_text_from_string(id="titlepage", localname="titlepage.xhtml", content="""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   <head>
@@ -53,7 +53,7 @@ epub.addTextFromString(id="titlepage", localname="titlepage.xhtml", content="""<
   </body>
 </html>""")
 
-epub.addTextFromString(id="contents", localname="contents.xhtml", content="""<?xml version="1.0" encoding="UTF-8"?>
+epub.add_text_from_string(id="contents", localname="contents.xhtml", content="""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   <head>
@@ -70,7 +70,7 @@ epub.addTextFromString(id="contents", localname="contents.xhtml", content="""<?x
   </body>
 </html>""")
 
-epub.addTextFromString(id="chap1", localname="chapter1.xhtml", content="""<?xml version="1.0" encoding="UTF-8"?>
+epub.add_text_from_string(id="chap1", localname="chapter1.xhtml", content="""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   <head>
@@ -86,7 +86,7 @@ epub.addTextFromString(id="chap1", localname="chapter1.xhtml", content="""<?xml 
   </body>
 </html>""")
 
-epub.addTextFromString(id="chap2", localname="chapter2.xhtml", content="""<?xml version="1.0" encoding="UTF-8"?>
+epub.add_text_from_string(id="chap2", localname="chapter2.xhtml", content="""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   <head>
@@ -101,10 +101,10 @@ epub.addTextFromString(id="chap2", localname="chapter2.xhtml", content="""<?xml 
   </body>
 </html>""")
 
-epub.addStyleFromString("main.css", """h1 {
+epub.add_style_from_string("main.css", """h1 {
     border-bottom: 1px solid black;
 }""", "style")
 
-epub.addFileFromFile("tux.png", "face.png", "tux", "image/png")
+epub.add_file_from_file("tux.png", "face.png", "tux", "image/png")
 
 epub.close()
