@@ -17,13 +17,14 @@ args = parser.parse_args()
 try:
     if not args.force and os.path.isfile(args.output):
         raise FileExistsError("{} already exists, use -f to force overwrite".format(args.output))
-    
+
     root = ET.parse(args.input).getroot()
-    
+
     parser = DocParser(root, MarkdownRenderer())
-    
+
     with open(args.output, "w") as file:
         file.write(parser.run())
 except Exception as exception:
     print(exception, file=sys.stderr)
     sys.exit(1)
+

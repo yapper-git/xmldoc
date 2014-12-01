@@ -26,8 +26,9 @@ for extract in EXTRACTS:
     root = ET.parse(extract["file"]).getroot()
     parser = DocParser(root, XHTMLRenderer())
     html_content = parser.run()
-    
-    epub.contents.addNavPoint(epub2.NavPoint(extract["id"], extract["id"], extract["id"]+".xhtml"))
+
+    epub.contents.addNavPoint(epub2.NavPoint(extract["id"], extract["id"],
+                                             extract["id"]+".xhtml"))
     epub.addTextFromString(id=extract["id"], localname=extract["id"]+".xhtml", content="""<?xml version="1.0" encoding="UTF-8" ?>
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{lang}">
