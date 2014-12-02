@@ -33,13 +33,26 @@ class XHTMLRenderer:
     def table_row(self, text):
         return "<tr>{}</tr>".format(text)
 
+    def _table_cell(self, name, text, align, colspan, rowspan):
+        attribs = {}
+        if align:
+            attribs["style"] = "text-align: {}".format(align)
+        if colspan != 1:
+            attribs["colspan"] = colspan
+        if rowspan != 1:
+            attribs["rowspan"] = rowspan
+        return "<{tag}{attribs}>{text}</{tag}>".format(
+            tag=name,
+            attribs="".join([
+                ' {}="{}"'.format(key, value)
+                for (key, value) in attribs.items()]),
+            text=text)
+
     def table_cell(self, text, align, colspan, rowspan):
-        # TODO colspan, rowspan, align support
-        return '<td>{}</td>'.format(text)
+        return self._table_cell("td", text, align, colspan, rowspan)
 
     def table_cell_header(self, text, align, colspan, rowspan):
-        # TODO colspan, rowspan, align support
-        return '<th>{}</th>'.format(text)
+        return self._table_cell("th", text, align, colspan, rowspan)
 
     def linebreak(self):
         return "<br />"
