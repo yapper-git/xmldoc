@@ -18,26 +18,26 @@ class XHTMLRenderer:
     def blockquote(self, text):
         return "<blockquote>{}</blockquote>".format(text)
 
-    def orderedList(self, text, listType):
+    def ordered_list(self, text, listType):
         return '<ol style="list-style-type: {}">{}</ol>'.format(listType, text)
 
-    def unorderedList(self, text):
+    def unordered_list(self, text):
         return "<ul>{}</ul>".format(text)
 
-    def listItem(self, text):
+    def list_item(self, text):
         return "<li>{}</li>".format(text)
 
     def table(self, text):
         return "<table>{}</table>".format(text)
 
-    def tableRow(self, text):
+    def table_row(self, text):
         return "<tr>{}</tr>".format(text)
 
-    def tableCell(self, text, align, colspan, rowspan):
+    def table_cell(self, text, align, colspan, rowspan):
         # TODO colspan, rowspan, align support
         return '<td>{}</td>'.format(text)
 
-    def tableCellHeader(self, text, align, colspan, rowspan):
+    def table_cell_header(self, text, align, colspan, rowspan):
         # TODO colspan, rowspan, align support
         return '<th>{}</th>'.format(text)
 

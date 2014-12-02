@@ -12,8 +12,8 @@ class DocParser:
             "h4":          self.header,
             "p":           self.paragraph,
             "blockquote":  self.blockquote,
-            "ul":          self.unorderedList,
-            "ol":          self.orderedList,
+            "ul":          self.unordered_list,
+            "ol":          self.ordered_list,
             "table":       self.table
         }
         text = ""
@@ -39,48 +39,48 @@ class DocParser:
             text += self.paragraph(child)
         return self.renderer.blockquote(text)
 
-    def unorderedList(self, element):
+    def unordered_list(self, element):
         text = ""
         for child in element:
-            text += self.listItem(child)
-        return self.renderer.unorderedList(text)
+            text += self.list_item(child)
+        return self.renderer.unordered_list(text)
 
-    def orderedList(self, element):
+    def ordered_list(self, element):
         text = ""
         for child in element:
-            text += self.listItem(child)
+            text += self.list_item(child)
         listType = element.get("type", "decimal")
-        return self.renderer.orderedList(text, listType)
+        return self.renderer.ordered_list(text, listType)
 
-    def listItem(self, element):
-        return self.renderer.listItem(self.inline(element))
+    def list_item(self, element):
+        return self.renderer.list_item(self.inline(element))
 
     def table(self, element):
         text = ""
         for row in element:
-            text += self.tableRow(row)
+            text += self.table_row(row)
         return self.renderer.table(text)
 
-    def tableRow(self, element):
+    def table_row(self, element):
         text = ""
         for cell in element:
             if cell.tag == "th":
-                text += self.tableCellHeader(cell)
+                text += self.table_cell_header(cell)
             else:
-                text += self.tableCell(cell)
-        return self.renderer.tableRow(text)
+                text += self.table_cell(cell)
+        return self.renderer.table_row(text)
 
-    def tableCell(self, element):
+    def table_cell(self, element):
         align   = element.get("align", "left")
         rowspan = int(element.get("rowspan", "1"))
         colspan = int(element.get("colspan", "1"))
-        return self.renderer.tableCell(self.inline(element), align, rowspan, colspan)
+        return self.renderer.table_cell(self.inline(element), align, rowspan, colspan)
 
-    def tableCellHeader(self, element):
+    def table_cell_header(self, element):
         align   = element.get("align", "left")
         rowspan = int(element.get("rowspan", "1"))
         colspan = int(element.get("colspan", "1"))
-        return self.renderer.tableCellHeader(self.inline(element), align, rowspan, colspan)
+        return self.renderer.table_cell_header(self.inline(element), align, rowspan, colspan)
 
     def inline(self, element):
         match = {

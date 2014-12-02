@@ -10,16 +10,16 @@ class Minifier:
     def run(self):
         tagList = ["blockquote", "ul", "ol", "table", "tr"]
         for element in self._root.findall("."):
-            self.removeText(element)
+            self.remove_text(element)
         for tag in tagList:
             for element in self._root.findall(".//" + tag):
-                self.removeText(element)
+                self.remove_text(element)
 
         tagList = ["h1", "h2", "h3", "h4", "p", "li", "td", "th"]
         for tag in tagList:
             for element in self._root.findall(".//" + tag):
                 self.strip(element)
-                self.mergeWhiteSpaces(element)
+                self.merge_white_spaces(element)
 
         return self._tree
 
@@ -31,13 +31,13 @@ class Minifier:
         elif children[len(children)-1].tail:
             children[len(children)-1].tail = children[len(children)-1].tail.rstrip()
 
-    def mergeWhiteSpaces(self, element):
+    def merge_white_spaces(self, element):
         element.text = self._regex.sub(" ", element.text)
         for subelement in element:
             if subelement.tail:
                 subelement.tail = self._regex.sub(" ", subelement.tail)
 
-    def removeText(self, element):
+    def remove_text(self, element):
         element.text = None
         for subelement in element:
             subelement.tail = None

@@ -30,25 +30,25 @@ class MarkdownRenderer:
     def blockquote(self, text):
         return "> " + textwrap.fill(text, self.width-2).replace("\n", "\n> ") + "\n\n"
 
-    def orderedList(self, text, listType):
+    def ordered_list(self, text, listType):
         return text + "\n"
 
-    def unorderedList(self, text):
+    def unordered_list(self, text):
         return text + "\n"
 
-    def listItem(self, text):
+    def list_item(self, text):
         return "* {}".format(text)+"\n"
 
     def table(self, text):
         return ""
 
-    def tableRow(self, text):
+    def table_row(self, text):
         return ""
 
-    def tableCell(self, text, align, colspan, rowspan):
+    def table_cell(self, text, align, colspan, rowspan):
         return ""
 
-    def tableCellHeader(self, text, align, colspan, rowspan):
+    def table_cell_header(self, text, align, colspan, rowspan):
         return ""
 
     def linebreak(self):
