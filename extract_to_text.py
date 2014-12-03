@@ -5,8 +5,8 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
-from DocParser import *
-from MarkdownRenderer import *
+import docparser
+import markdown_renderer
 
 parser = argparse.ArgumentParser(description="Converts XML extract to XHTML.")
 parser.add_argument("-f", "--force", help="force output overwrite", action="store_true")
@@ -20,7 +20,8 @@ try:
 
     root = ET.parse(args.input).getroot()
 
-    parser = DocParser(root, MarkdownRenderer())
+    renderer = markdown_renderer.MarkdownRenderer()
+    parser = docparser.DocParser(root, renderer)
 
     with open(args.output, "w") as file:
         file.write(parser.run())

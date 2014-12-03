@@ -2,9 +2,9 @@
 
 import xml.etree.ElementTree as ET
 
-from DocParser import *
-from XHTMLRenderer import *
+import docparser
 import epub2
+import xhtml_renderer
 
 OUTPUT = "extracts.epub"
 IDENTIFIER = "helloworld"
@@ -24,7 +24,8 @@ epub.language = LANGUAGE
 
 for extract in EXTRACTS:
     root = ET.parse(extract["file"]).getroot()
-    parser = DocParser(root, XHTMLRenderer())
+    renderer = xhtml_renderer.XHTMLRenderer()
+    parser = docparser.DocParser(root, renderer)
     html_content = parser.run()
 
     epub.contents.add_navpoint(epub2.NavPoint(extract["id"], extract["id"],

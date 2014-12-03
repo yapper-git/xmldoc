@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import os
 import sys
 
-from Minifier import Minifier
+import minifier
 
 parser = argparse.ArgumentParser(description="Minifies an XML extract.")
 parser.add_argument("-f", "--force", action="store_true",
@@ -21,7 +21,7 @@ try:
 
     tree = ET.parse(args.input)
 
-    minifier = Minifier(tree)
+    minifier = minifier.Minifier(tree)
     newtree = minifier.run()
     newtree.write(args.output)
 except Exception as exception:

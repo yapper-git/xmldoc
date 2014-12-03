@@ -5,8 +5,8 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
-from DocParser import *
-from XHTMLRenderer import *
+import docparser
+import xhtml_renderer
 
 DEFAULT_LANG = "en"
 DEFAULT_TITLE = "Untitled extract"
@@ -34,7 +34,8 @@ try:
 
     root = ET.parse(args.input).getroot()
 
-    parser = DocParser(root, XHTMLRenderer())
+    renderer = xhtml_renderer.XHTMLRenderer()
+    parser = docparser.DocParser(root, renderer)
 
     content = (
         '<!DOCTYPE html PUBLIC "{dtd_name}" "{dtd_location}">\n'
