@@ -21,10 +21,9 @@ try:
 
     tree = ET.parse(args.input)
 
-    minifier = minifier.Minifier(tree)
-    newtree = minifier.run()
-    newtree.write(args.output)
-except Exception as exception:
+    minifier.Minifier.run(tree)
+    tree.write(args.output)
+except OSError as exception:
     print(exception, file=sys.stderr)
     sys.exit(1)
 
