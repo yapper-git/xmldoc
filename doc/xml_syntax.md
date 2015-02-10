@@ -2,11 +2,11 @@
 
 ## Blocks
 
-### Header: `h1`, `h2`, `h3`, `h4`
+### Header
 
-Headers must only contain text (no inline formatting).
+Headers `h1`, `h2`, `h3`, `h4` must only contain text (no inline formatting).
 
-### Paragraph: `p`
+### Paragraph
 
 By default, the text is left align.
 To *center*, set `align` attribute to `center`.
@@ -16,10 +16,10 @@ To *align right*, set `align` attribute to `right`.
 
 `blockquote` element must contains at least one paragraph.
 
-### List: `ul`, `ol`
+### List
 
 * `ul`: unordered list
-* `ol`: ordered list, optional attribute: `type` with value:
+* `ol`: ordered list, optional attribute `type` with value:
     + `default` (1, 2, 3, 4 etc.)
     + `lower-alpha` (a, b, c, d etc.)
     + `upper-alpha` (A, B, C, D etc.)
@@ -33,7 +33,7 @@ No nesting support for now
 
 A table is a block, centered in the middle of the page.
 
-* `table`: table
+* `table`: table container
 * `tr`: table row
 * `td`: table cell (optional attributes: `align`, `rowspan`, `colspan`)
 * `th`: table cell header (optional attributes: `align`, `rowspan`, `colspan`)
