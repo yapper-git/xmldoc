@@ -9,7 +9,7 @@ Headers must only contain text (no inline formatting).
 ### Paragraph: `p`
 
 By default, the text is left align.
-To *center*, set `align` attribute  to `center`.
+To *center*, set `align` attribute to `center`.
 To *align right*, set `align` attribute to `right`.
 
 ### Blockquote
@@ -18,24 +18,29 @@ To *align right*, set `align` attribute to `right`.
 
 ### List: `ul`, `ol`
 
-* `ul` : unordered list
-* `ol[type]` : ordered list
+* `ul`: unordered list
+* `ol`: ordered list, optional attribute: `type` with value:
     + `default` (1, 2, 3, 4 etc.)
     + `lower-alpha` (a, b, c, d etc.)
     + `upper-alpha` (A, B, C, D etc.)
     + `lower-roman` (i, ii, iii, iv etc.)
     + `upper-roman` (I, II, III, IV etc.)
-* `li` : list item
+* `li`: list item
 
 No nesting support for now
 
 ### Table
 
-Tables are block, center in the middle of the page (like `margin:auto` in CSS).
+A table is a block, centered in the middle of the page.
 
-Table row: `tr`
+* `table`: table
+* `tr`: table row
+* `td`: table cell (optional attributes: `align`, `rowspan`, `colspan`)
+* `th`: table cell header (optional attributes: `align`, `rowspan`, `colspan`)
 
-Table cell (header): `td`, `th` (`align[center|right]`, `rowspan`, `colspan`)
+`align` attribute must be `center` or `right`.
+
+`rowspan`, `colspan` must be an integer, greater than 1.
 
 ## Inline
 
