@@ -142,14 +142,14 @@ class Contents:
 class NavPoint:
     """NavPoint represents a NavPoint element for contents"""
 
-    #_playOrder = 0
+    # _playOrder = 0
 
     def __init__(self, id, label, source, navpoints=[]):
         self._id = id
         self._label = label
         self._source = source
         self._navpoints = navpoints
-        #self._playOrder = NavPoint.
+        # self._playOrder = NavPoint.
 
     def append(self, navpoint):
         self._navpoints.append(navpoint)
@@ -462,4 +462,3 @@ class Epub:
                 if depth > max_depth:
                     max_depth = depth
             return max_depth
-

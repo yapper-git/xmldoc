@@ -71,13 +71,13 @@ class DocParser:
         return self.renderer.table_row(text)
 
     def table_cell(self, element):
-        align   = element.get("align", "left")
+        align = element.get("align", "left")
         rowspan = int(element.get("rowspan", "1"))
         colspan = int(element.get("colspan", "1"))
         return self.renderer.table_cell(self.inline(element), align, rowspan, colspan)
 
     def table_cell_header(self, element):
-        align   = element.get("align", "left")
+        align = element.get("align", "left")
         rowspan = int(element.get("rowspan", "1"))
         colspan = int(element.get("colspan", "1"))
         return self.renderer.table_cell_header(self.inline(element), align, rowspan, colspan)
@@ -114,4 +114,3 @@ class DocParser:
 
     def highlight(self, element):
         return self.renderer.highlight(self.inline(element))
-

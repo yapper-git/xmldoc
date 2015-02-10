@@ -1,5 +1,6 @@
 import textwrap
 
+
 class MarkdownRenderer:
 
     def __init__(self):
@@ -68,4 +69,3 @@ class MarkdownRenderer:
 
     def highlight(self, text):
         return "<mark>{}</mark>".format(text)
-

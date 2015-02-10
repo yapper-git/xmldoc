@@ -71,4 +71,3 @@ class XHTMLRenderer:
 
     def highlight(self, text):
         return "<mark>{}</mark>".format(text)
-

@@ -26,4 +26,3 @@ except Exception as exception:
     sys.exit(1)
 
 print("validates")
-

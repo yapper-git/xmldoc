@@ -1,5 +1,6 @@
 import re
 
+
 class Minifier:
 
     INLINE_ELEMENTS = ["h1", "h2", "h3", "h4", "p", "li", "td", "th", "b",
@@ -55,4 +56,3 @@ class Minifier:
         for subelement in element:
             if subelement.tail:
                 subelement.tail = regex.sub(" ", subelement.tail)
-
