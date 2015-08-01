@@ -40,7 +40,7 @@ class MarkdownRenderer:
     def list_item(self, text):
         return "* {}".format(text)+"\n"
 
-    def table(self, text):
+    def table(self, text, num_cols):
         return ""
 
     def table_row(self, text):

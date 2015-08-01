@@ -59,7 +59,7 @@ class DocParser:
         text = ""
         for row in element:
             text += self.table_row(row)
-        return self.renderer.table(text)
+        return self.renderer.table(text, len(element[0]))  # FIXME
 
     def table_row(self, element):
         text = ""

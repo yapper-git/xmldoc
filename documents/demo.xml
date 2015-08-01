@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extract>
+
+  <h1>Introduction</h1>
+  <p>This file is a Proof of Concept…</p>
+
+  <!-- Headings -->
+  <h1>1. Headings</h1>
+  <h2>Level 2</h2>
+  <h3>Level 3</h3>
+  <h4>Level 4</h4>
+
+  <!-- Paragraphs -->
+  <h1>2. Paragraphs &amp; Blockquotes</h1>
+  <h2>Align left / Justify</h2>
+  <p>
+    Quam ob rem id primum videamus, si placet, quatenus amor in amicitia
+    progredi debeat. Numne, si Coriolanus habuit amicos, ferre contra patriam
+    arma illi cum Coriolano debuerunt? num Vecellinum amici regnum adpetentem,
+    num Maelium debuerunt iuvare?
+  </p>
+  <h2>Center</h2>
+  <p align="center">
+    Eodem tempore etiam Hymetii praeclarae indolis viri negotium est actitatum,
+    cuius hunc novimus esse textum. cum Africam pro consule regeret
+    Carthaginiensibus victus inopia iam lassatis, ex horreis Romano populo
+    destinatis frumentum dedit, pauloque postea cum provenisset segetum copia,
+    integre sine ulla restituit mora.
+  </p>
+  <h2>Align right</h2>
+  <p align="right">
+    Tantum autem cuique tribuendum, primum quantum ipse efficere possis, deinde
+    etiam quantum ille quem diligas atque adiuves, sustinere. Non enim neque tu
+    possis, quamvis excellas, omnes tuos ad honores amplissimos perducere, ut
+    Scipio P. Rupilium potuit consulem efficere, fratrem eius L. non potuit.
+    Quod si etiam possis quidvis deferre ad alterum, videndum est tamen,
+    quid ille possit sustinere.
+  </p>
+  <!-- Blockquotes -->
+  <h2>Blockquotes</h2>
+  <blockquote>
+    <p>
+      Ut enim benefici liberalesque sumus, non ut exigamus gratiam (neque enim
+      beneficium faeneramur sed natura propensi ad liberalitatem sumus), sic
+      amicitiam non spe mercedis adducti sed quod omnis eius fructus in ipso
+      amore inest, expetendam putamus.
+    </p>
+    <p>
+      Proinde concepta rabie saeviore, quam desperatio incendebat et fames,
+      amplificatis viribus ardore incohibili in excidium urbium matris Seleuciae
+      efferebantur, quam comes tuebatur Castricius tresque legiones bellicis
+      sudoribus induratae.
+    </p>
+  </blockquote>
+
+  <!-- Lists -->
+  <h1>3. Lists</h1>
+  <h2>Unordered Lists (&lt;ul&gt;)</h2>
+  <ul>
+    <li>Item (first)</li>
+    <li>Item (second)</li>
+    <li>Item (third)</li>
+  </ul>
+  <h2>Ordered Lists (&lt;ol&gt;)</h2>
+  <ol>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+  </ol>
+  <ol type="lower-alpha">
+    <li>Item a</li>
+    <li>Item b</li>
+    <li>Item c</li>
+  </ol>
+  <ol type="upper-alpha">
+    <li>Item A</li>
+    <li>Item B</li>
+    <li>Item C</li>
+  </ol>
+  <ol type="lower-roman">
+    <li>Item i</li>
+    <li>Item ii</li>
+    <li>Item iii</li>
+  </ol>
+  <ol type="upper-roman">
+    <li>Item I</li>
+    <li>Item II</li>
+    <li>Item III</li>
+  </ol>
+
+  <!-- Tables -->
+  <h1>4. Tables</h1>
+  <table>
+    <tr>
+      <th>(1, 1)</th>
+      <th>(1, 2)</th>
+      <th>(1, 3)</th>
+    </tr>
+    <tr>
+      <td>(2, 1)</td>
+      <td>(2, 2)</td>
+      <td>(2, 3)</td>
+    </tr>
+    <tr>
+      <td>(3, 1)</td>
+      <td>(3, 2)</td>
+      <td>(3, 3)</td>
+    </tr>
+  </table>
+  <!--
+  <table>
+    <tr>
+      <th rowspan="2">(1, 1) and (1, 2)</th>
+      <th>(1, 3)</th>
+    </tr>
+    <tr>
+      <td>(2, 1)</td>
+      <td rowspan="2" colspan="2">line 2</td>
+    </tr>
+    <tr>
+      <td>(3, 1)</td>
+    </tr>
+  </table>
+  -->
+  <table>
+    <tr>
+      <th align="center">Atque vero bellisque cum exhausti.</th>
+      <th align="right">Annonas postea.</th>
+    </tr>
+    <tr>
+      <td align="center">Et errore.</td>
+      <td align="right">Multos deiectos sceleste nullos catenis.</td>
+    </tr>
+  </table>
+
+  <!-- Inline format -->
+  <h1>5. Inline Format</h1>
+  <ul>
+    <li>bold: <b>foo</b></li>
+    <li>italic: <i>foo</i></li>
+    <li>mark: <mark>foo</mark></li>
+    <li>mark and italic: <mark>foo <i>bar</i></mark></li>
+    <li>mix: <b><mark>foo</mark> <i>bar</i> <sup>[1]</sup></b></li>
+  </ul>
+
+  <h1>6. Special characters</h1>
+  <h2>XML</h2>
+  <ul>
+    <li>&amp;amp; ⇒ &amp;</li>
+    <li>&amp;apos; ⇒ &apos;</li>
+    <li>&amp;quot; ⇒ &quot;</li>
+    <li>&amp;lt; ⇒ &lt;</li>
+    <li>&amp;gt; ⇒ &gt;</li>
+  </ul>
+  <h2>LaTeX</h2>
+  <p>
+    In LaTeX there are 10 special characters:
+    <mark>#</mark>
+    <mark>$</mark>
+    <mark>%</mark>
+    <mark>&amp;</mark>
+    <mark>\</mark>
+    <mark>^</mark>
+    <mark>_</mark>
+    <mark>{</mark>
+    <mark>}</mark>
+    <mark>~</mark>.
+  </p>
+  <p>Most of them can be escaped prepending a simple backslash, but \, ^ and ~ need special treatment:</p>
+  <ul>
+    <li>for backslash (\) use \textbackslash{}</li>
+    <li>for caret (^) use \^{} or \textasciicircum{}</li>
+    <li>and for tilde (~) use \~{} or \textasciitilde{}</li>
+  </ul>
+  <p>In short:</p>
+  <table>
+    <tr>
+      <th>To get</th>
+      <th>you must use</th>
+    </tr>
+    <tr>
+      <td>#</td>
+      <td>\#</td>
+    </tr>
+    <tr>
+      <td>$</td>
+      <td>\$</td>
+    </tr>
+    <tr>
+      <td>%</td>
+      <td>\%</td>
+    </tr>
+    <tr>
+      <td>&amp;</td>
+      <td>\&amp;</td>
+    </tr>
+    <tr>
+      <td>\</td>
+      <td>\textbackslash{}</td>
+    </tr>
+    <tr>
+      <td>^</td>
+      <td>\textasciicircum{}</td>
+    </tr>
+    <tr>
+      <td>_</td>
+      <td>\_</td>
+    </tr>
+    <tr>
+      <td>{</td>
+      <td>\{</td>
+    </tr>
+    <tr>
+      <td>}</td>
+      <td>\}</td>
+    </tr>
+    <tr>
+      <td>~</td>
+      <td>\textasciitilde{}</td>
+    </tr>
+  </table>
+  <h2>Unicode</h2>
+  <p>Unicode smileys: 😀 😁 😂 😃 😄 😅 😆 😇 😈 😉 😊 😋 😌 😍 😎 😏 😐 😑 😒 😓 😔 😕 😖 😗 😘 😙 😚 😛 😜 😝 😞 😟 😠 😡 😢 😣</p>
+
+</extract>

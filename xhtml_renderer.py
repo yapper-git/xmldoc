@@ -27,7 +27,7 @@ class XHTMLRenderer:
     def list_item(self, text):
         return "<li>{}</li>".format(text)
 
-    def table(self, text):
+    def table(self, text, num_cols):
         return "<table>{}</table>".format(text)
 
     def table_row(self, text):

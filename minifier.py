@@ -36,7 +36,8 @@ class Minifier:
 
     @staticmethod
     def strip_element(element):
-        element.text = element.text.lstrip()
+        if element.text:
+            element.text = element.text.lstrip()
         children = list(element)
         if len(children) == 0:
             element.text = element.text.rstrip()
@@ -52,7 +53,8 @@ class Minifier:
     @staticmethod
     def merge_whitespace_in_element(element):
         regex = re.compile(r"\s+")
-        element.text = regex.sub(" ", element.text)
+        if element.text:
+            element.text = regex.sub(" ", element.text)
         for subelement in element:
             if subelement.tail:
                 subelement.tail = regex.sub(" ", subelement.tail)
