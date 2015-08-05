@@ -50,18 +50,18 @@ class LaTeXRenderer:
     def blockquote(self, text):
         return '\n\n\\begin{quotation}\n%s\n\\end{quotation}' % text.strip()
 
-    def ordered_list(self, text, listType):
-        if listType == "decimal":
+    def ordered_list(self, text, list_type):
+        if list_type == "decimal":
             label = ""
         else:
             self.usepackage("enumitem")
-            if listType == "lower-alpha":
+            if list_type == "lower-alpha":
                 label = r"[label=\alph*.]"
-            elif listType == "upper-alpha":
+            elif list_type == "upper-alpha":
                 label = r"[label=\Alph*.]"
-            elif listType == "lower-roman":
+            elif list_type == "lower-roman":
                 label = r"[label=\roman*.]"
-            elif listType == "upper-roman":
+            elif list_type == "upper-roman":
                 label = r"[label=\Roman*.]"
             else:
                 raise NotImplementedError

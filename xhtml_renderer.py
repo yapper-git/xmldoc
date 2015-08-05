@@ -20,13 +20,13 @@ class XHTMLRenderer:
         if align == 'left':
             return '<p>{}</p>'.format(text)
         else:
-            return '<p style="text-align: {}">{}</p>'.format(align, text)
+            return '<p class="{}">{}</p>'.format(align, text)
 
     def blockquote(self, text):
         return '<blockquote>{}</blockquote>'.format(text)
 
     def ordered_list(self, text, list_type):
-        return '<ol style="list-style-type: {}">{}</ol>'.format(list_type, text)
+        return '<ol class="{}">{}</ol>'.format(list_type, text)
 
     def unordered_list(self, text):
         return '<ul>{}</ul>'.format(text)
@@ -62,7 +62,7 @@ class XHTMLRenderer:
         return self._table_cell('th', text, align, colspan, rowspan)
 
     def linebreak(self):
-        return '<br />'
+        return '<br/>'
 
     def bold(self, text):
         return '<strong>{}</strong>'.format(text)

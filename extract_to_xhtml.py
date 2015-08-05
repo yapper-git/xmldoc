@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+from jinja2 import Environment, FileSystemLoader
 import os
 import sys
 import xml.etree.ElementTree as ET
@@ -27,37 +28,26 @@ args = parser.parse_args()
 lang = args.lang if args.lang else DEFAULT_LANG
 title = args.title if args.title else DEFAULT_TITLE
 
-try:
-    if not args.force and os.path.isfile(args.output):
-        raise FileExistsError("{} already exists, use -f to force overwrite"
-                              .format(args.output))
+if not args.force and os.path.isfile(args.output):
+    raise FileExistsError("{} already exists, use -f to force overwrite"
+                          .format(args.output))
 
-    root = ET.parse(args.input).getroot()
+root = ET.parse(args.input).getroot()
 
-    renderer = xhtml_renderer.XHTMLRenderer()
-    parser = docparser.DocParser(root, renderer)
+renderer = xhtml_renderer.XHTMLRenderer()
+parser = docparser.DocParser(root, renderer)
 
-    content = (
-        '<!DOCTYPE html PUBLIC "{dtd_name}" "{dtd_location}">\n'
-        '<html xmlns="{xmlns}" xml:lang="{lang}" lang="{lang}" dir="ltr">\n'
-        '  <head>\n'
-        '    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n'
-        '    <title>{title}</title>\n'
-        '  </head>\n'
-        '  <body>\n'
-        '    <h1>{title}</h1><hr />\n'
-        '    {content}\n'
-        '  </body>\n'
-        '</html>'.format(
-            xmlns="http://www.w3.org/1999/xhtml",
-            dtd_name="-//W3C//DTD XHTML 1.0 Strict//EN",
-            dtd_location="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd",
-            lang=lang,
-            title=title,
-            content=parser.run()))
+templates_folder = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'templates')
+env = Environment(loader=FileSystemLoader(templates_folder))
+template = env.get_template('xhtml_render.html')
+template_render = template.render(
+    xmlns="http://www.w3.org/1999/xhtml",
+    dtd_name="-//W3C//DTD XHTML 1.0 Strict//EN",
+    dtd_location="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd",
+    lang=lang,
+    title=title,
+    content=parser.run(),
+)
 
-    with open(args.output, "w") as file:
-        file.write(content)
-except Exception as exception:
-    print(exception, file=sys.stderr)
-    sys.exit(1)
+with open(args.output, "w") as file:
+    file.write(template_render)

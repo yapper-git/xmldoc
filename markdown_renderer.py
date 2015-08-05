@@ -30,7 +30,7 @@ class MarkdownRenderer:
     def blockquote(self, text):
         return "> " + textwrap.fill(text, self.width-2).replace("\n", "\n> ") + "\n\n"
 
-    def ordered_list(self, text, listType):
+    def ordered_list(self, text, list_type):
         return text + "\n"
 
     def unordered_list(self, text):
