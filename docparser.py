@@ -5,23 +5,22 @@ class DocParser:
         self.renderer = renderer
 
     def run(self):
-        match = {
-            "h1":          self.header,
-            "h2":          self.header,
-            "h3":          self.header,
-            "h4":          self.header,
-            "p":           self.paragraph,
-            "blockquote":  self.blockquote,
-            "ul":          self.unordered_list,
-            "ol":          self.ordered_list,
-            "table":       self.table
-        }
         text = ""
         for child in self.root:
-            if child.tag in match:
-                text += match[child.tag](child)
+            if child.tag in ['h1', 'h2', 'h3', 'h4']:
+                text += self.header(child)
+            elif child.tag == 'p':
+                text += self.paragraph(child)
+            elif child.tag == 'blockquote':
+                text += self.blockquote(child)
+            elif child.tag == 'ul':
+                text += self.unordered_list(child)
+            elif child.tag == 'ol':
+                text += self.ordered_list(child)
+            elif child.tag == 'table':
+                text += self.table(child)
             else:
-                assert False, "Unsupported tag name: " + child.tag
+                raise NotImplementedError("Unexpected {} tag".format(child.tag))
         return text
 
     def header(self, element):
@@ -29,13 +28,12 @@ class DocParser:
         return self.renderer.header(self.renderer.text(element.text), level)
 
     def paragraph(self, element):
-        align = element.get("align", "left")
+        align = element.get('align', 'left')
         return self.renderer.paragraph(self.inline(element), align)
 
     def blockquote(self, element):
         text = ""
         for child in element:
-            assert child.tag == "p"
             text += self.paragraph(child)
         return self.renderer.blockquote(text)
 
@@ -49,8 +47,8 @@ class DocParser:
         text = ""
         for child in element:
             text += self.list_item(child)
-        listType = element.get("type", "decimal")
-        return self.renderer.ordered_list(text, listType)
+        list_type = element.get('type', 'decimal')
+        return self.renderer.ordered_list(text, list_type)
 
     def list_item(self, element):
         return self.renderer.list_item(self.inline(element))
@@ -64,32 +62,32 @@ class DocParser:
     def table_row(self, element):
         text = ""
         for cell in element:
-            if cell.tag == "th":
+            if cell.tag == 'th':
                 text += self.table_cell_header(cell)
             else:
                 text += self.table_cell(cell)
         return self.renderer.table_row(text)
 
     def table_cell(self, element):
-        align = element.get("align", "left")
-        rowspan = int(element.get("rowspan", "1"))
-        colspan = int(element.get("colspan", "1"))
+        align = element.get('align', 'left')
+        rowspan = int(element.get('rowspan', 1))
+        colspan = int(element.get('colspan', 1))
         return self.renderer.table_cell(self.inline(element), align, rowspan, colspan)
 
     def table_cell_header(self, element):
-        align = element.get("align", "left")
-        rowspan = int(element.get("rowspan", "1"))
-        colspan = int(element.get("colspan", "1"))
+        align = element.get('align', 'left')
+        rowspan = int(element.get('rowspan', 1))
+        colspan = int(element.get('colspan', 1))
         return self.renderer.table_cell_header(self.inline(element), align, rowspan, colspan)
 
     def inline(self, element):
         match = {
-            "br":   self.linebreak,
-            "b":    self.bold,
-            "i":    self.italic,
-            "sup":  self.superscript,
-            "sub":  self.subscript,
-            "mark": self.highlight
+            'br':   self.linebreak,
+            'b':    self.bold,
+            'i':    self.italic,
+            'sup':  self.superscript,
+            'sub':  self.subscript,
+            'mark': self.highlight,
         }
         text = self.renderer.text(element.text) if element.text else ""
         for child in element:

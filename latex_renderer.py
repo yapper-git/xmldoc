@@ -1,5 +1,20 @@
 class LaTeXRenderer:
 
+    replacements = [  # order matters, 10 special characters
+        ('\\', r'\\'),
+        ('#', r'\#'),
+        ('$', r'\$'),
+        ('%', r'\%'),
+        ('&', r'\&'),
+        ('_', r'\_'),
+        ('{', r'\{'),
+        ('}', r'\}'),
+        ('^', r'\textasciicircum{}'),
+        ('~', r'\textasciitilde{}'),
+        (r'\\', r'\textbackslash{}'),
+    ]
+    # can add \textless{} for < and \textgreater{} for >
+
     def __init__(self):
         self.packages = []
 
@@ -8,21 +23,7 @@ class LaTeXRenderer:
             self.packages.append(pkg_name)
 
     def text(self, text):
-        replacements = [  # order matters, 10 special characters
-            ('\\', r'\\'),
-            ('#', r'\#'),
-            ('$', r'\$'),
-            ('%', r'\%'),
-            ('&', r'\&'),
-            ('_', r'\_'),
-            ('{', r'\{'),
-            ('}', r'\}'),
-            ('^', r'\textasciicircum{}'),
-            ('~', r'\textasciitilde{}'),
-            (r'\\', r'\textbackslash{}'),
-        ]
-        # can add \textless{} for < and \textgreater{} for >
-        for old, new in replacements:
+        for old, new in self.replacements:
             text = text.replace(old, new)
         return text
 

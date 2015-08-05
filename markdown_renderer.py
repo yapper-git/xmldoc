@@ -3,8 +3,7 @@ import textwrap
 
 class MarkdownRenderer:
 
-    def __init__(self):
-        self.width = 80
+    width = 80
 
     def text(self, text):
         return text.replace("*", "\\*")
