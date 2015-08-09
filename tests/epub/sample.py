@@ -80,9 +80,22 @@ epub.add_text_from_string(id="chap1", localname="chapter1.xhtml", content="""<?x
   </head>
   <body>
     <h1>Chapter 1</h1>
-    <p>Et eodem impetu Domitianum praecipitem per scalas itidem funibus constrinxerunt, eosque coniunctos per ampla spatia civitatis acri raptavere discursu. iamque artuum et membrorum divulsa conpage superscandentes corpora mortuorum ad ultimam truncata deformitatem velut exsaturati mox abiecerunt in flumen.</p>
-    <p>Ideoque fertur neminem aliquando ob haec vel similia poenae addictum oblato de more elogio revocari iussisse, quod inexorabiles quoque principes factitarunt. et exitiale hoc vitium, quod in aliis non numquam intepescit, in illo aetatis progressu effervescebat, obstinatum eius propositum accendente adulatorum cohorte.</p>
-    <p>Eo adducta re per Isauriam, rege Persarum bellis finitimis inligato repellenteque a conlimitiis suis ferocissimas gentes, quae mente quadam versabili hostiliter eum saepe incessunt et in nos arma moventem aliquotiens iuvant, Nohodares quidam nomine e numero optimatum, incursare Mesopotamiam quotiens copia dederit ordinatus, explorabat nostra sollicite, si repperisset usquam locum vi subita perrupturus.</p>
+    <p>Et eodem impetu Domitianum praecipitem per scalas itidem funibus
+    constrinxerunt, eosque coniunctos per ampla spatia civitatis acri raptavere
+    discursu. iamque artuum et membrorum divulsa conpage superscandentes corpora
+    mortuorum ad ultimam truncata deformitatem velut exsaturati mox abiecerunt
+    in flumen.</p>
+    <p>Ideoque fertur neminem aliquando ob haec vel similia poenae addictum
+    oblato de more elogio revocari iussisse, quod inexorabiles quoque principes
+    factitarunt. et exitiale hoc vitium, quod in aliis non numquam intepescit,
+    in illo aetatis progressu effervescebat, obstinatum eius propositum
+    accendente adulatorum cohorte.</p>
+    <p>Eo adducta re per Isauriam, rege Persarum bellis finitimis inligato
+    repellenteque a conlimitiis suis ferocissimas gentes, quae mente quadam
+    versabili hostiliter eum saepe incessunt et in nos arma moventem aliquotiens
+    iuvant, Nohodares quidam nomine e numero optimatum, incursare Mesopotamiam
+    quotiens copia dederit ordinatus, explorabat nostra sollicite, si
+    repperisset usquam locum vi subita perrupturus.</p>
   </body>
 </html>""")
 
@@ -96,8 +109,13 @@ epub.add_text_from_string(id="chap2", localname="chapter2.xhtml", content="""<?x
   </head>
   <body>
     <h1>Chapter 2</h1>
-    <p>Quam ob rem cave Catoni anteponas ne istum quidem ipsum, quem Apollo, ut ais, sapientissimum iudicavit; huius enim facta, illius dicta laudantur. De me autem, ut iam cum utroque vestrum loquar, sic habetote.</p>
-    <p>Quanta autem vis amicitiae sit, ex hoc intellegi maxime potest, quod ex infinita societate generis humani, quam conciliavit ipsa natura, ita contracta res est et adducta in angustum ut omnis caritas aut inter duos aut inter paucos iungeretur.</p>
+    <p>Quam ob rem cave Catoni anteponas ne istum quidem ipsum, quem Apollo, ut
+    ais, sapientissimum iudicavit; huius enim facta, illius dicta laudantur. De
+    me autem, ut iam cum utroque vestrum loquar, sic habetote.</p>
+    <p>Quanta autem vis amicitiae sit, ex hoc intellegi maxime potest, quod ex
+    infinita societate generis humani, quam conciliavit ipsa natura, ita
+    contracta res est et adducta in angustum ut omnis caritas aut inter duos aut
+    inter paucos iungeretur.</p>
   </body>
 </html>""")
 

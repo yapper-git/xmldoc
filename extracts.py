@@ -45,7 +45,6 @@ for extract in EXTRACTS:
                 <h1>{title}</h1>
                 {body}
               </body>
-            </html>"""
-            .format(body=html_content, title=extract['title'], lang=LANGUAGE))
+            </html>""".format(body=html_content, title=extract['title'], lang=LANGUAGE))
 
 epub.close()

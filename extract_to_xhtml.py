@@ -3,7 +3,6 @@
 import argparse
 from jinja2 import Environment, FileSystemLoader
 import os
-import sys
 import xml.etree.ElementTree as ET
 
 import docparser
