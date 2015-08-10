@@ -5,82 +5,82 @@ class Metadata:
     """Metadata represents the metadata element in .opf file"""
 
     def __init__(self):
-        self._titles = []
-        self._creators = []
-        self._subjects = []
-        self._description = None
-        self._publisher = None
-        self._contributors = []
-        self._dates = []
-        self._type = None
-        self._format = None
-        self._identifiers = []
-        self._source = None
-        self._languages = []
-        self._relation = None
-        self._coverage = None
-        self._rights = None
-        self._metas = []
+        self.titles = []
+        self.creators = []
+        self.subjects = []
+        self.description = None
+        self.publisher = None
+        self.contributors = []
+        self.dates = []
+        self.type = None
+        self.format = None
+        self.identifiers = []
+        self.source = None
+        self.languages = []
+        self.relation = None
+        self.coverage = None
+        self.rights = None
+        self.metas = []
 
     def add_title(self, title):
-        self._titles.append(title)
+        self.titles.append(title)
 
     def add_creator(self, name, role=None, file_as=None):
-        self._creators.append({
+        self.creators.append({
             "name": name,
             "role": role,
             "fileAs": file_as
         })
 
     def add_subject(self, subject):
-        self._subjects.append(subject)
+        self.subjects.append(subject)
 
     def set_description(self, description):
-        self._description = description
+        self.description = description
 
     def set_publisher(self, publisher):
-        self._publisher = publisher
+        self.publisher = publisher
 
     def add_contributor(self, name, role=None, file_as=None):
-        self._contributors.append({
+        self.contributors.append({
             "name": name,
             "role": role,
             "fileAs": file_as
         })
 
     def add_date(self, date, event=None):
-        self._dates.append({"date": date, "event": event})
+        self.dates.append({"date": date, "event": event})
 
     def set_type(self, type):
-        self._type = type
+        self.type = type
 
     def set_format(self, format):
-        self._format = format
+        self.format = format
 
     def add_identifier(self, content, id=None, scheme=None):
-        self._identifiers.append({
+        self.identifiers.append({
             "content": content,
             "id": id,
             "scheme": scheme
         })
 
     def set_source(self, source):
-        self._source = source
+        self.source = source
 
     def add_language(self, language):
-        self._languages.append(language)
+        self.languages.append(language)
 
     def set_relation(self, relation):
-        self._relation = relation
+        self.relation = relation
 
     def set_coverage(self, coverage):
-        self._coverage = coverage
+        self.coverage = coverage
 
     def set_rights(self, rights):
-        self._rights = rights
+        self.rights = rights
 
     def add_meta(self, name, content):
-        self._metas.append({"name": name, "content": content})
+        self.metas.append({"name": name, "content": content})
 
 
 class Manifest:
@@ -133,38 +133,34 @@ class Guide:
 class Contents:
 
     def __init__(self):
-        self._navpoints = []
+        self.navpoints = []
 
     def add_navpoint(self, navpoint):
-        self._navpoints.append(navpoint)
+        self.navpoints.append(navpoint)
 
 
 class NavPoint:
     """NavPoint represents a NavPoint element for contents"""
 
-    # _playOrder = 0
-
-    def __init__(self, id, label, source, navpoints=[]):
-        self._id = id
-        self._label = label
-        self._source = source
-        self._navpoints = navpoints
-        # self._playOrder = NavPoint.
+    def __init__(self, id, label, source, navpoints=None):
+        self.id = id
+        self.label = label
+        self.source = source
+        self.navpoints = navpoints if navpoints else []
 
     def append(self, navpoint):
-        self._navpoints.append(navpoint)
+        self.navpoints.append(navpoint)
 
 
 class Epub:
 
-    encoding = "UTF-8"
-    tab = "\t"
+    encoding = "utf-8"
+    tab = "    "
     end = "\n"
 
     def __init__(self, file_path):
         self.identifier = None
         self.title = None
-        self.language = None
         self.metadata = Metadata()
         self.manifest = Manifest()
         self.spine = Spine()
@@ -174,20 +170,22 @@ class Epub:
         self._file_path = file_path
         self.manifest.add_item("ncx", "toc.ncx", "application/x-dtbncx+xml")
 
+    def validate(self):
+        if not self.identifier:
+            raise NameError("required identifier")
+        if not self.title:
+            raise NameError("required title")
+        if not self.metadata.languages:
+            raise NameError("required at least one language in metadata")
+        if len(self.navpoints) == 0:
+            raise NameError("required at least one navpoint")
+
     def open(self):
         self._zip = zipfile.ZipFile(self._file_path, "w")
         self._write_mimetype_file()
         self._write_container_file()
 
     def close(self):
-        if not self.identifier:
-            raise ValueError("identifier required")
-        if not self.title:
-            raise ValueError("title required")
-        if not self.title:
-            raise ValueError("language required")
-        if len(self.contents._navpoints) == 0:
-            raise ValueError("navpoint required")
         self._write_opf_file()
         self._write_ncx_file()
         self._zip.close()
@@ -239,6 +237,7 @@ class Epub:
                 encoding=Epub.encoding, tab=Epub.tab, end=Epub.end))
 
     def _write_opf_file(self):
+        indent = (self.end + (self.tab * 2))
         self._zip.writestr(
             "OEBPS/content.opf",
             '<?xml version="1.0" encoding="{encoding}"?>{end}'
@@ -252,15 +251,19 @@ class Epub:
             '{tab}<spine toc="ncx">{end}'
             '{tab}{tab}{spine}{end}'
             '{tab}</spine>{end}'
+            '{guide}'
             '</package>'.format(
                 xmlns_opf="http://www.idpf.org/2007/opf",
                 xmlns_dc="http://purl.org/dc/elements/1.1/",
                 encoding=Epub.encoding,
                 tab=Epub.tab,
                 end=Epub.end,
-                metadata="\n\t\t".join(self._metadata_tags()),
-                manifest="\n\t\t".join(self._manifest_tags()),
-                spine="\n\t\t".join(self._spine_tags())))
+                metadata=indent.join(self._metadata_tags()),
+                manifest=indent.join(self._manifest_tags()),
+                spine=indent.join(self._spine_tags()),
+                guide=self._guide_render()
+            )
+        )
 
     def _write_ncx_file(self):
         self._zip.writestr(
@@ -272,11 +275,11 @@ class Epub:
             '{tab}{tab}<meta name="dtb:uid" content="{identifier}"/>{end}'
             '{tab}{tab}<meta name="dtb:depth" content="{depth}"/>{end}'
             '{tab}{tab}<meta name="dtb:totalPageCount" content="0"/>{end}'
-            '{tab}<meta name="dtb:maxPageNumber" content="0"/>{end}'
+            '{tab}{tab}<meta name="dtb:maxPageNumber" content="0"/>{end}'
             '{tab}</head>{end}'
-            '{tab}<docTitle><text>SIC</text></docTitle>'
-            '<navMap>{end}'
-            '{tab}{tab}{navmap}{end}'
+            '{tab}<docTitle><text>{title}</text></docTitle>{end}'
+            '{tab}<navMap>{end}'
+            '{navmap}'
             '{tab}</navMap>{end}'
             '</ncx>'.format(
                 dtd_name="-//NISO//DTD ncx 2005-1//EN",
@@ -285,6 +288,7 @@ class Epub:
                 tab=Epub.tab,
                 end=Epub.end,
                 identifier=self.identifier,
+                title=self.title,
                 depth=self.depth(),
                 navmap=self.render_navmap()))
 
@@ -297,7 +301,7 @@ class Epub:
 
     def _spine_tags(self):
         tags = []
-        for itemref in self.spine:  # FIXME ugly
+        for itemref in self.spine:
             tag = '<itemref idref="{}"'.format(itemref["idref"])
             if not itemref["linear"]:
                 tag += ' linear="no"'
@@ -305,11 +309,24 @@ class Epub:
             tags.append(tag)
         return tags
 
+    def _guide_render(self):
+        indent = (self.end + (self.tab * 2))
+        guide_tags = list(self._guide_tags())
+        if guide_tags:
+            return (
+                '{tab}<guide>{end}'
+                '{tab}{tab}{guide}{end}'
+                '{tab}</guide>{end}'
+            ).format(tab=self.tab, end=self.end, guide=indent.join(guide_tags))
+        else:
+            return ''
+
     def _guide_tags(self):
         tags = []
-        for type, title, href in self.guide:
-            tags.append('<reference type="{}" title="{}" href="{}"/>'
-                        .format(type, title, href))
+        for reference in self.guide:
+            tags.append('<reference type="{}" title="{}" href="{}"/>'.format(
+                reference['type'], reference['title'], reference['href']
+            ))
         return tags
 
     def _metadata_tags(self):
@@ -318,11 +335,11 @@ class Epub:
 
         # titles
         tags.append('<dc:title>{}</dc:title>'.format(self.title))
-        for title in metadata._titles:
+        for title in metadata.titles:
             tags.append('<dc:title>{}</dc:title>'.format(title))
 
         # creators
-        for creator in metadata._creators:
+        for creator in metadata.creators:
             tag = '<dc:creator'
             if creator["role"]:
                 tag += ' opf:role="{}"'.format(creator["role"])
@@ -332,19 +349,19 @@ class Epub:
             tags.append(tag)
 
         # subjects
-        for subject in metadata._subjects:
+        for subject in metadata.subjects:
             tags.append('<dc:subject>{}</dc:subject>'.format(subject))
 
         # description
-        if metadata._description:
-            tags.append('<dc:description>{}</dc:description>'.format(metadata._description))
+        if metadata.description:
+            tags.append('<dc:description>{}</dc:description>'.format(metadata.description))
 
         # publisher
-        if metadata._publisher:
-            tags.append('<dc:publisher>{}</dc:publisher>'.format(metadata._publisher))
+        if metadata.publisher:
+            tags.append('<dc:publisher>{}</dc:publisher>'.format(metadata.publisher))
 
         # contributors
-        for contributor in metadata._contributors:
+        for contributor in metadata.contributors:
             tag = '<dc:contributor'
             if contributor["role"]:
                 tag += ' opf:role="{}"'.format(contributor["role"])
@@ -354,7 +371,7 @@ class Epub:
             tags.append(tag)
 
         # dates
-        for date in metadata._dates:
+        for date in metadata.dates:
             tag = '<dc:date'
             if date["event"]:
                 tag += ' opf:event="{}"'.format(date["event"])
@@ -362,16 +379,16 @@ class Epub:
             tags.append(tag)
 
         # type
-        if metadata._type:
-            tags.append('<dc:type>{}</dc:type>'.format(metadata._type))
+        if metadata.type:
+            tags.append('<dc:type>{}</dc:type>'.format(metadata.type))
 
         # format
-        if metadata._format:
-            tags.append('<dc:format>{}</dc:format>'.format(metadata._format))
+        if metadata.format:
+            tags.append('<dc:format>{}</dc:format>'.format(metadata.format))
 
         # identifiers
         tags.append('<dc:identifier id="BookId">{}</dc:identifier>'.format(self.identifier))
-        for identifier in metadata._identifiers:
+        for identifier in metadata.identifiers:
             tag = '<dc:identifier'
             if identifier["id"]:
                 tag += ' id="{}"'.format(identifier["id"])
@@ -381,41 +398,39 @@ class Epub:
             tags.append(tag)
 
         # source
-        if metadata._source:
-            tags.append('<dc:source>{}</dc:source>'.format(metadata._source))
+        if metadata.source:
+            tags.append('<dc:source>{}</dc:source>'.format(metadata.source))
 
         # languages
-        tags.append('<dc:language>{}</dc:language>'.format(self.language))
-        for language in metadata._languages:
+        for language in metadata.languages:
             tags.append('<dc:language>{}</dc:language>'.format(language))
 
         # relation
-        if metadata._relation:
-            tags.append('<dc:relation>{}</dc:relation>'.format(metadata._relation))
+        if metadata.relation:
+            tags.append('<dc:relation>{}</dc:relation>'.format(metadata.relation))
 
         # coverage
-        if metadata._coverage:
-            tags.append('<dc:coverage>{}</dc:coverage>'.format(metadata._coverage))
+        if metadata.coverage:
+            tags.append('<dc:coverage>{}</dc:coverage>'.format(metadata.coverage))
 
         # rights
-        if metadata._rights:
-            tags.append('<dc:rights>{}</dc:rights>'.format(metadata._rights))
+        if metadata.rights:
+            tags.append('<dc:rights>{}</dc:rights>'.format(metadata.rights))
 
         # metas
-        for name, content in metadata._metas:
-            tags.append('<meta name="{}" content="{}"/>'.format(name, content))
+        for meta in metadata.metas:
+            tags.append('<meta name="{}" content="{}"/>'.format(meta["name"], meta["content"]))
 
         return tags
 
     def render_navmap(self):
         buf = ""
-        for navpoint in self.contents._navpoints:
+        for navpoint in self.contents.navpoints:
             buf += self.render_navpoint(navpoint, 2)
         return buf
 
     def render_navpoint(self, navpoint, level):
         # FIXME ugly
-        # TODO implement playOrder
 
         tab = Epub.tab
         end = Epub.end
@@ -423,18 +438,18 @@ class Epub:
         buffer = ""
 
         # <navPoint id="..." playOrder="...">
-        buffer += (tab * level) + '<navPoint id="{}">'.format(navpoint._id) + end
+        buffer += (tab * level) + '<navPoint id="{}">'.format(navpoint.id) + end
 
         # <navLabel><text>...</text></navLabel>
         buffer += (tab * (level+1)) + '<navLabel>' + end
-        buffer += (tab * (level+2)) + '<text>' + navpoint._label + '</text>' + end
+        buffer += (tab * (level+2)) + '<text>' + navpoint.label + '</text>' + end
         buffer += (tab * (level+1)) + '</navLabel>' + end
 
         # <content src="..."/>
-        buffer += (tab * (level+1)) + '<content src="' + navpoint._source + '"/>' + end
+        buffer += (tab * (level+1)) + '<content src="' + navpoint.source + '"/>' + end
 
         # <navPoint>...</navPoint> if children
-        for child_navpoint in navpoint._navpoints:
+        for child_navpoint in navpoint.navpoints:
             buffer += self.render_navpoint(child_navpoint, level+1)
 
         # </navPoint>
@@ -444,14 +459,14 @@ class Epub:
 
     def depth(self):
         max_depth = 0
-        for navpoint in self.contents._navpoints:
+        for navpoint in self.contents.navpoints:
             depth = self.depth_rec(navpoint, 1)
             if depth > max_depth:
                 max_depth = depth
         return max_depth
 
     def depth_rec(self, navpoint, current_depth):
-        navpoints = navpoint._navpoints
+        navpoints = navpoint.navpoints
 
         if len(navpoints) == 0:
             return current_depth
