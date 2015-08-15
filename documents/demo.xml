@@ -11,7 +11,7 @@
   <h4>Level 4</h4>
 
   <!-- Paragraphs -->
-  <h1>2. Paragraphs &amp; Blockquotes</h1>
+  <h1>2. Paragraphs</h1>
   <h2>Align left / Justify</h2>
   <p>
     Quam ob rem id primum videamus, si placet, quatenus amor in amicitia
@@ -36,8 +36,9 @@
     Quod si etiam possis quidvis deferre ad alterum, videndum est tamen,
     quid ille possit sustinere.
   </p>
+
   <!-- Blockquotes -->
-  <h2>Blockquotes</h2>
+  <h1>3. Blockquotes</h1>
   <blockquote>
     <p>
       Ut enim benefici liberalesque sumus, non ut exigamus gratiam (neque enim
@@ -54,18 +55,20 @@
   </blockquote>
 
   <!-- Lists -->
-  <h1>3. Lists</h1>
+  <h1>4. Lists</h1>
   <h2>Unordered Lists (&lt;ul&gt;)</h2>
   <ul>
-    <li>Item (first)</li>
-    <li>Item (second)</li>
-    <li>Item (third)</li>
+    <li>The first item</li>
+    <li>The second item</li>
+    <li>The third item</li>
+    <li>The fourth item</li>
   </ul>
   <h2>Ordered Lists (&lt;ol&gt;)</h2>
   <ol>
-    <li>Item 1</li>
-    <li>Item 2</li>
-    <li>Item 3</li>
+    <li>The first item</li>
+    <li>The second item</li>
+    <li>The third item</li>
+    <li>The fourth item</li>
   </ol>
   <ol type="lower-alpha">
     <li>Item a</li>
@@ -87,9 +90,43 @@
     <li>Item II</li>
     <li>Item III</li>
   </ol>
+  <h2>Nested Lists</h2>
+  <ol>
+    <li>
+      Chapter One
+      <ol>
+        <li>Section One</li>
+        <li>Section Two </li>
+        <li>Section Three </li>
+      </ol>
+    </li>
+    <li>Chapter Two</li>
+    <li>
+      Chapter Three
+      <ol>
+        <li>
+          Section One
+          <ul>
+            <li>Subsection 1</li>
+            <li>Subsection 2</li>
+          </ul>
+        </li>
+        <li>
+          Section Two
+          <ul>
+            <li>Subsection 1</li>
+            <li>Subsection 2</li>
+            <li>Subsection 3</li>
+          </ul>
+        </li>
+        <li>Section Three</li>
+      </ol>
+    </li>
+    <li>Chapter Four</li>
+  </ol>
 
   <!-- Tables -->
-  <h1>4. Tables</h1>
+  <h1>5. Tables</h1>
   <table>
     <tr>
       <th>(1, 1)</th>
@@ -131,19 +168,23 @@
       <td align="center">Et errore.</td>
       <td align="right">Multos deiectos sceleste nullos catenis.</td>
     </tr>
+    <tr>
+      <td align="center">Quanta autem vis amicitiae sit, ex hoc intellegi maxime potest, quod ex infinita societate generis humani, quam conciliavit ipsa natura, ita contracta res est et adducta in angustum ut omnis caritas aut inter duos aut inter paucos iungeretur.</td>
+      <td align="right">Prorsus suis quem nostris prima sit prorsus prima patiuntur commodis.</td>
+    </tr>
   </table>
 
   <!-- Inline format -->
-  <h1>5. Inline Format</h1>
+  <h1>6. Inline Format</h1>
   <ul>
     <li>bold: <b>foo</b></li>
     <li>italic: <i>foo</i></li>
     <li>mark: <mark>foo</mark></li>
-    <li>mark and italic: <mark>foo <i>bar</i></mark></li>
     <li>mix: <b><mark>foo</mark> <i>bar</i> <sup>[1]</sup></b></li>
   </ul>
 
-  <h1>6. Special characters</h1>
+  <!-- Special characters -->
+  <h1>7. Special characters</h1>
   <h2>XML</h2>
   <ul>
     <li>&amp;amp; ⇒ &amp;</li>
