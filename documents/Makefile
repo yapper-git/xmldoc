@@ -26,6 +26,9 @@ default: $(MARKDOWN_FILES) $(PDF_FILES) $(XHTML_FILES)
 	#exiftool -xmp:all= $@
 	#exiftool -Title="This is the Title" -Author="Happy Man" -Subject="This is the Subject" -Creator="mysite.com" -Producer="" $@
 
+%.mobi: %.epub
+	epub-convert $< $@
+
 clean:
 	rm -f *.tmp
 	rm -f *.aux *.log *.out *.toc
