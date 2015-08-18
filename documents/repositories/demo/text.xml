@@ -173,6 +173,16 @@
       <td align="right">Prorsus suis quem nostris prima sit prorsus prima patiuntur commodis.</td>
     </tr>
   </table>
+  <table>
+    <tr>
+      <td>Line<br/>break</td>
+      <td><b>Bold</b></td>
+      <td><i>Italic</i></td>
+      <td><mark>highlight</mark></td>
+      <td><sup>Superscript</sup></td>
+      <td><sub>Subscript</sub></td>
+    </tr>
+  </table>
 
   <!-- Inline format -->
   <h1>6. Inline Format</h1>

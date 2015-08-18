@@ -152,12 +152,12 @@ class LaTeXRenderer(Renderer):
                 if cell_element.tag == 'th':
                     text = '\\textbf{%s}' % text
 
-                # use multirow to change left alignemnt
+                # change left alignemnt if needed
                 #align = cell_element.get('align', 'left')
                 #if align == 'center':
-                #    text = '\\multicolumn{1}{|c|}{%s}' % text
+                #    text = r'\centering %s' % text
                 #elif align == 'right':
-                #    text = '\\multicolumn{1}{|r|}{%s}' % text
+                #    text = r'\raggedleft %s' % text
 
                 output += '    ' if j == 0 else ' & '
                 output += text
@@ -172,7 +172,7 @@ class LaTeXRenderer(Renderer):
         return text
 
     def linebreak(self, text):
-        return r'\\'  # or \newline
+        return r'\newline '  # avoid confusion with \\ in table cells
 
     def bold(self, text):
         return r'\textbf{%s}' % text
