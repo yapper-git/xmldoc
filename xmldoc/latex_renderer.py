@@ -4,7 +4,7 @@ import os
 from xmldoc.renderer import Renderer
 
 
-class LaTeXRenderer(Renderer):
+class LatexRenderer(Renderer):
 
     replacements = [  # order matters, 10 special characters
         ('\\', r'\\'),
@@ -40,7 +40,7 @@ class LaTeXRenderer(Renderer):
             subtitle=subtitle,
             authors=authors,
             packages=self.packages,
-            main_content=super(LaTeXRenderer, self).run().rstrip(),
+            main_content=super(LatexRenderer, self).run().rstrip(),
         )
 
     def usepackage(self, pkg_name):
@@ -191,4 +191,4 @@ class LaTeXRenderer(Renderer):
         self.usepackage('color,soul')
         return r'\hl{%s}' % text
 
-Renderer.register(LaTeXRenderer)
+Renderer.register(LatexRenderer)

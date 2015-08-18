@@ -1,6 +1,5 @@
 import abc
 import re
-import xml.etree.ElementTree as ET
 
 
 class Renderer(metaclass=abc.ABCMeta):

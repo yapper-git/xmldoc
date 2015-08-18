@@ -1,7 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 import os
 
-from epub2 import EpubBuilder, EpubNavPoint
+from epub2 import EpubBuilder
 
 from xmldoc.renderer import Renderer
 

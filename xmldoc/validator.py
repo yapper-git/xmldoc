@@ -16,7 +16,7 @@ class Validator:
 
     def manifest_validation(self):
         manifest_path = os.path.join(self.path, 'manifest.json')
-        manifest_dict = json.load(open(manifest_path,'r'))
+        manifest_dict = json.load(open(manifest_path, 'r'))
         for key, value in manifest_dict.items():
             assert key in ['lang', 'title', 'subtitle', 'authors']
 
