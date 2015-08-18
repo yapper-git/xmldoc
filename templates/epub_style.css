@@ -1,6 +1,5 @@
-body {
-    width: 80%;
-    margin: 2em auto;
+.mark {
+    background-color: yellow;
 }
 
 .center {
@@ -27,18 +26,6 @@ ol.upper-roman {
     list-style-type: upper-roman;
 }
 
-h1, h2, h3, h4 {
-    color: #404040;
-    font-weight: 700;
-    line-height: 1.16;
-}
-
-p {
-    font-size: 1em;
-     margin-top: 0;
-    margin-bottom: 1.26585em;
-}
-
 blockquote {
     border-left: 4px solid #ddd;
     padding-left: 25px;
@@ -46,13 +33,7 @@ blockquote {
 }
 
 ul, ol {
-    margin: 1em 0;
-    padding: 0 0 0 1.45em;
     line-height: 1.4em;
-}
-
-ul li, ol li {
-    margin: 0.5em 0px;
 }
 
 table {
