@@ -226,47 +226,47 @@
   <p>In short:</p>
   <table>
     <tr>
-      <th>To get</th>
-      <th>you must use</th>
+      <th align="center">To get</th>
+      <th align="center">you must use</th>
     </tr>
     <tr>
-      <td>#</td>
+      <td align="center">#</td>
       <td>\#</td>
     </tr>
     <tr>
-      <td>$</td>
+      <td align="center">$</td>
       <td>\$</td>
     </tr>
     <tr>
-      <td>%</td>
+      <td align="center">%</td>
       <td>\%</td>
     </tr>
     <tr>
-      <td>&amp;</td>
+      <td align="center">&amp;</td>
       <td>\&amp;</td>
     </tr>
     <tr>
-      <td>\</td>
+      <td align="center">\</td>
       <td>\textbackslash{}</td>
     </tr>
     <tr>
-      <td>^</td>
+      <td align="center">^</td>
       <td>\textasciicircum{}</td>
     </tr>
     <tr>
-      <td>_</td>
+      <td align="center">_</td>
       <td>\_</td>
     </tr>
     <tr>
-      <td>{</td>
+      <td align="center">{</td>
       <td>\{</td>
     </tr>
     <tr>
-      <td>}</td>
+      <td align="center">}</td>
       <td>\}</td>
     </tr>
     <tr>
-      <td>~</td>
+      <td align="center">~</td>
       <td>\textasciitilde{}</td>
     </tr>
   </table>

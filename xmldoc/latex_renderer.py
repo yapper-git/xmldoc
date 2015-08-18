@@ -140,7 +140,7 @@ class LaTeXRenderer(Renderer):
     def table(self, element):
         self.usepackage('tabulary')
         num_cols = len(list(element[0]))
-        param = '{' + ('|L' * num_cols) + '|}'  # FIXME align L? C? R?
+        param = '{' + ('|L' * num_cols) + '|}'
         output = '\\begin{center}\n\\begin{tabulary}{\\textwidth}' + param + '\n'
         for i, row_element in enumerate(element):
             if i == 0:
@@ -153,11 +153,11 @@ class LaTeXRenderer(Renderer):
                     text = '\\textbf{%s}' % text
 
                 # change left alignemnt if needed
-                #align = cell_element.get('align', 'left')
-                #if align == 'center':
-                #    text = r'\centering %s' % text
-                #elif align == 'right':
-                #    text = r'\raggedleft %s' % text
+                align = cell_element.get('align', 'left')
+                if align == 'center':
+                    text = r'\centering\arraybackslash %s' % text
+                elif align == 'right':
+                    text = r'\raggedleft\arraybackslash %s' % text
 
                 output += '    ' if j == 0 else ' & '
                 output += text
