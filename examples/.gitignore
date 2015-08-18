@@ -1,2 +1,10 @@
-ebook/
-latex/
+*.epub
+*.epub-FILES
+*.mobi
+
+*.tex
+*.aux
+*.log
+*.out
+*.toc
+*.pdf

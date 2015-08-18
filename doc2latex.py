@@ -6,8 +6,8 @@ Converts document repository to LaTeX.
 
 from argparse import ArgumentParser
 
-from document import Document
-from latex_renderer import LaTeXRenderer
+from xmldoc.document import Document
+from xmldoc.latex_renderer import LaTeXRenderer
 
 parser = ArgumentParser(description=__doc__)
 parser.add_argument("input", help="path to document repository")

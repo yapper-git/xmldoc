@@ -6,8 +6,8 @@ Converts document repository to EPUB2.
 
 from argparse import ArgumentParser
 
-from document import Document
-from epub_renderer import EpubRenderer
+from xmldoc.document import Document
+from xmldoc.epub_renderer import EpubRenderer
 
 parser = ArgumentParser(description=__doc__)
 parser.add_argument("input", help="path to document repository")

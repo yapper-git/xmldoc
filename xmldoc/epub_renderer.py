@@ -3,7 +3,7 @@ import os
 
 from epub2 import EpubBuilder, EpubNavPoint
 
-from renderer import Renderer
+from xmldoc.renderer import Renderer
 
 
 class EpubRenderer(Renderer):

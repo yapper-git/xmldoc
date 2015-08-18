@@ -6,7 +6,7 @@ Validates document repository (manifest.json and text.xml)
 
 from argparse import ArgumentParser
 
-from validator import Validator
+from xmldoc.validator import Validator
 
 parser = ArgumentParser(description=__doc__)
 parser.add_argument("input", help="path to document repository")

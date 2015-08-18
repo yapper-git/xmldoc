@@ -1,7 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 import os
 
-from renderer import Renderer
+from xmldoc.renderer import Renderer
 
 
 class LaTeXRenderer(Renderer):
