@@ -52,6 +52,10 @@ class Renderer(metaclass=abc.ABCMeta):
                 text += self.text(self.regex.sub(' ', child.tail))
         return text.strip() if strip else text
 
+    @staticmethod
+    def strip(element):
+        return ''.join(element.itertext())
+
     @abc.abstractmethod
     def header(self, element):
         return

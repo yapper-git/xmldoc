@@ -10,8 +10,8 @@ from document import Document
 from latex_renderer import LaTeXRenderer
 
 parser = ArgumentParser(description=__doc__)
-parser.add_argument("input", help="path to input file")
-parser.add_argument("output", help="path to output file", nargs="?")
+parser.add_argument("input", help="path to document repository")
+parser.add_argument("output", help="path to epub2 file", nargs="?")
 args = parser.parse_args()
 
 document = Document(args.input)

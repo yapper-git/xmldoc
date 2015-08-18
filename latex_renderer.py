@@ -116,6 +116,7 @@ class LaTeXRenderer(Renderer):
                     output_child += self.ordered_list(child_ol).rstrip()
                 output_child = output_child.replace('\n', '\n    ')
                 output += output_child
+
         return output
 
     def ordered_list_label(self, element):
@@ -145,8 +146,22 @@ class LaTeXRenderer(Renderer):
             if i == 0:
                 output += '\\hline\n'
             for j, cell_element in enumerate(row_element):
+
+                # add bold for cell headers
+                text = self.inline(cell_element)
+                if cell_element.tag == 'th':
+                    text = '\\textbf{%s}' % text
+
+                # use multirow to change left alignemnt
+                #align = cell_element.get('align', 'left')
+                #if align == 'center':
+                #    text = '\\multicolumn{1}{|c|}{%s}' % text
+                #elif align == 'right':
+                #    text = '\\multicolumn{1}{|r|}{%s}' % text
+
                 output += '    ' if j == 0 else ' & '
-                output += self.inline(cell_element)
+                output += text
+
             output += ' \\\\\n\\hline\n'
         output += '\\end{tabulary}\n\\end{center}\n\n'
         return output

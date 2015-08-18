@@ -29,10 +29,10 @@
 
 <!-- Headings -->
 
-    <xsd:element name="h1" type="xsd:string"/>
-    <xsd:element name="h2" type="xsd:string"/>
-    <xsd:element name="h3" type="xsd:string"/>
-    <xsd:element name="h4" type="xsd:string"/>
+    <xsd:element name="h1" type="inline"/>
+    <xsd:element name="h2" type="inline"/>
+    <xsd:element name="h3" type="inline"/>
+    <xsd:element name="h4" type="inline"/>
 
 <!-- Paragraph -->
 
@@ -79,8 +79,8 @@
             <xsd:sequence>
                 <xsd:choice minOccurs="0" maxOccurs="unbounded">
                     <xsd:group ref="inlineGroup"/>
-                    <!--<xsd:element ref="ul"/>
-                    <xsd:element ref="ol"/>-->
+                    <xsd:element ref="ul"/>
+                    <xsd:element ref="ol"/>
                 </xsd:choice>
             </xsd:sequence>
         </xsd:complexType>
@@ -114,8 +114,10 @@
             <xsd:group ref="inlineGroup" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
         <xsd:attribute ref="align"/>
+        <!--
         <xsd:attribute ref="colspan"/>
         <xsd:attribute ref="rowspan"/>
+        -->
     </xsd:complexType>
 
 <!-- Attributes -->

@@ -140,11 +140,14 @@ class EpubRenderer(Renderer):
         for row_element in element:
             output += '    <tr>\n'
             for cell_element in row_element:
+                tag = cell_element.tag
                 text = self.inline(cell_element)
-                if cell_element.tag == 'th':
-                    output += '        <th>{}</th>\n'.format(text)
+                align = cell_element.get('align', 'left')
+                output += '    ' * 2
+                if align == 'left':
+                    output += '<{0}>{1}</{0}>\n'.format(tag, text)
                 else:
-                    output += '        <td>{}</td>\n'.format(text)
+                    output += '<{0} class="{1}">{2}</{0}>\n'.format(tag, align, text)
             output += '    </tr>\n'
         output += '</table>\n'
         return output
