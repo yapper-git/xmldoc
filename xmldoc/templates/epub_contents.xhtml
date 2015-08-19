@@ -7,6 +7,10 @@
   </head>
   <body>
     <h1>{{ title }}</h1>
-    <p>Not supported yet.</p>
+    <ul>
+    {%- for navpoint in navpoints %}
+        <li><a href="{{ navpoint.id }}.xhtml">{{ navpoint.label }}</a></li>
+    {%- endfor %}
+    </ul>
   </body>
 </html>

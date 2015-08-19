@@ -1,7 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 import os
 
-from epub2 import EpubBuilder
+from epub2 import EpubBuilder, EpubNavPoint
 
 from xmldoc.renderer import Renderer
 
@@ -52,27 +52,74 @@ class EpubRenderer(Renderer):
         epub.add_style_from_string('styles/titlepage.css', template.render(), 'style_titlepage')
         epub.add_guide("title-page", "Title page", "texts/titlepage.xhtml")
 
+        # add navpoints for h1
+        number = 1
+        for element in self.document.root:
+            if element.tag == 'h1':
+                navpoint = EpubNavPoint(None, None, None, None)  # FIXME
+                navpoint.id = 'section-{}'.format(number)
+                navpoint.label = self.strip(element)
+                navpoint.source = 'texts/section-{}.xhtml'.format(number)
+                epub.add_navpoint(navpoint)
+                number += 1
+
         # contents
         contents_title = self.contents_i18n[lang]
         template = env.get_template('epub_contents.xhtml')
         epub.add_text_from_string(
             'texts/contents.xhtml',
-            template.render(lang=lang, title=contents_title),
+            template.render(lang=lang, title=contents_title, navpoints=epub.navpoints),
             'contents'
         )
         epub.add_guide("contents", contents_title, "texts/contents.xhtml")
 
-        # main
+        # main pages
         template = env.get_template('epub_main.xhtml')
-        epub.add_text_from_string(
-            'texts/main.xhtml',
-            template.render(lang=lang, content=super(EpubRenderer, self).run()),
-            'main'
-        )
+        section_list = self.split_pages()
+        for section in section_list:
+            epub.add_text_from_string(
+                'texts/{}.xhtml'.format(section['id']),
+                template.render(
+                    lang=lang,
+                    title=section['title'],
+                    content=self.parse(section['nodes'])  # FIXME indent?
+                ),
+                section['id']
+            )
+
+        # add main.css
         template = env.get_template('epub_style.css')
         epub.add_style_from_string('styles/main.css', template.render(), 'style_main')
 
         epub.close()
+
+    def split_pages(self):
+        section_number = 0
+        section_list = []
+
+        # add section-0 if document does not start with <h1>
+        first_node = self.document.root.find('*')
+        if first_node.tag != 'h1':
+            section_list.append({
+                'id': 'section-0',
+                'title': 'Introduction',  # FIXME i18n FIXME exact expression
+                'nodes': []
+            })
+
+        for element in self.document.root:
+            # create new section
+            if element.tag == 'h1':
+                section_number += 1
+                section_list.append({
+                    'id': 'section-{}'.format(section_number),
+                    'title': self.inline(element),
+                    'nodes': []
+                })
+
+            # add element in the current section
+            section_list[-1]['nodes'].append(element)
+
+        return section_list
 
     def header(self, element):
         text = self.inline(element)

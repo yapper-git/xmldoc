@@ -5,7 +5,6 @@ import xml.etree.ElementTree as ET
 
 from xmldoc.epub_renderer import EpubRenderer
 from xmldoc.latex_renderer import LatexRenderer
-from xmldoc.validator import Validator
 
 
 # revparse_single raises:
@@ -83,9 +82,6 @@ class DocumentMixin:
 
     def export_epub(self, filename):
         EpubRenderer(self).run(filename)
-
-    def valid(self):
-        Validator(self).run()
 
 
 class DocumentSnapshot(DocumentMixin):

@@ -10,8 +10,11 @@ class Renderer(metaclass=abc.ABCMeta):
         self.document = document
 
     def run(self):
+        return self.parse(self.document.root)
+
+    def parse(self, elements):
         output = ""
-        for child in self.document.root:
+        for child in elements:
             if child.tag in ['h1', 'h2', 'h3', 'h4']:
                 output += self.header(child)
             elif child.tag == 'p':
