@@ -56,7 +56,7 @@ class EpubRenderer(Renderer):
         number = 1
         for element in self.document.root:
             if element.tag == 'h1':
-                navpoint = EpubNavPoint(None, None, None, None)  # FIXME
+                navpoint = EpubNavPoint()
                 navpoint.id = 'section-{}'.format(number)
                 navpoint.label = self.strip(element)
                 navpoint.source = 'texts/section-{}.xhtml'.format(number)
