@@ -5,27 +5,30 @@ import os
 
 class Validator:
 
+    REQUIRED_FIELDS = ['lang', 'title', 'subtitle', 'authors']
     XML_SCHEMA = "extract.xsd"
 
-    def __init__(self, path):
-        self.path = path
+    @classmethod
+    def document_validation(cls, path):
+        manifest_path = os.path.join(path, 'manifest.json')
+        text_path = os.path.join(path, 'text.xml')
 
-    def run(self):
-        self.manifest_validation()
-        self.text_validation()
+        cls.manifest_validation(open(manifest_path, 'r').read())
+        cls.text_validation(open(text_path, 'r').read())
 
-    def manifest_validation(self):
-        manifest_path = os.path.join(self.path, 'manifest.json')
-        manifest_dict = json.load(open(manifest_path, 'r'))
+    @classmethod
+    def manifest_validation(cls, content):
+        manifest_dict = json.loads(content)
         for key, value in manifest_dict.items():
-            assert key in ['lang', 'title', 'subtitle', 'authors']
+            if key not in cls.REQUIRED_FIELDS:
+                raise SyntaxError("{} required".format(key))
 
-    def text_validation(self):
-        xsd_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), self.XML_SCHEMA)
-        text_path = os.path.join(self.path, 'text.xml')
+    @classmethod
+    def text_validation(cls, content):
+        xsd_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), cls.XML_SCHEMA)
         xsd_tree = etree.parse(xsd_path)
 
-        xml_tree = etree.parse(text_path)
+        xml_tree = etree.fromstring(content.encode())
         xmlschema = etree.XMLSchema(xsd_tree)
         xmlschema.assertValid(xml_tree)
 

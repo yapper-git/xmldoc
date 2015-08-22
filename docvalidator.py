@@ -12,5 +12,5 @@ parser = ArgumentParser(description=__doc__)
 parser.add_argument("input", help="path to document repository")
 args = parser.parse_args()
 
-validator = Validator(args.input)
-validator.run()
+validator = Validator()
+validator.document_validation(args.input)
