@@ -4,7 +4,7 @@ import re
 
 class Renderer(metaclass=abc.ABCMeta):
 
-    regex = re.compile(r'\s+')
+    regex = re.compile(r'[ \t\n\r]+')
 
     def __init__(self, document):
         self.document = document
