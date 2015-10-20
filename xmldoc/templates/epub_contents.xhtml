@@ -8,9 +8,14 @@
   <body>
     <h1>{{ title }}</h1>
     <ul>
-    {%- for navpoint in navpoints %}
-        <li><a href="{{ navpoint.id }}.xhtml">{{ navpoint.label }}</a></li>
-    {%- endfor %}
+      {%- for navpoint in navpoints recursive %}
+      <li>
+        <a href="../{{ navpoint.source }}">{{ navpoint.label }}</a>
+        {%- if navpoint.children %}
+        <ul>{{ loop(navpoint.children)|indent }}</ul>
+        {%- endif %}
+      </li>
+      {%- endfor %}
     </ul>
   </body>
 </html>
