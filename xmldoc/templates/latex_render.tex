@@ -57,8 +57,10 @@
 \maketitle
 \newpage
 
+{%- if contents %}
 \tableofcontents
 \newpage
+{%- endif %}
 
 {{ main_content }}
 
