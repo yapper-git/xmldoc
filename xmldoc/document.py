@@ -3,8 +3,9 @@ import os
 import pygit2
 import xml.etree.ElementTree as ET
 
-from xmldoc.epub_renderer import EpubRenderer
-from xmldoc.latex_renderer import LatexRenderer
+from xmldoc.export_epub import EpubExporter
+from xmldoc.export_html import HtmlExporter
+from xmldoc.export_latex import LatexExporter
 
 
 # revparse_single raises:
@@ -77,11 +78,14 @@ class VersionedDocument:
 
 class DocumentMixin:
 
-    def export_latex(self):
-        return LatexRenderer(self).run()
-
     def export_epub(self, filename):
-        EpubRenderer(self).run(filename)
+        EpubExporter().run(self, filename)
+
+    def export_html(self):
+        return HtmlExporter().run(self)
+
+    def export_latex(self):
+        return LatexExporter().run(self)
 
 
 class DocumentSnapshot(DocumentMixin):

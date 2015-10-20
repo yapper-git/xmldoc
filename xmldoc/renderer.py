@@ -6,11 +6,8 @@ class Renderer(metaclass=abc.ABCMeta):
 
     regex = re.compile(r'[ \t\n\r]+')
 
-    def __init__(self, document):
-        self.document = document
-
-    def run(self):
-        return self.parse(self.document.root)
+    def run(self, root):
+        return self.parse(root)
 
     def parse(self, elements):
         output = ""

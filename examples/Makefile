@@ -4,7 +4,7 @@ PDFLATEX = lualatex -interaction nonstopmode -halt-on-error -file-line-error
 
 default: all
 
-all: all-latex all-pdf all-epub all-epub-files all-mobi
+all: all-latex all-pdf all-epub all-epub-files all-mobi all-html
 
 all-latex: $(patsubst repositories/%,%.tex,$(wildcard repositories/*))
 
@@ -15,6 +15,8 @@ all-epub: $(patsubst repositories/%,%.epub,$(wildcard repositories/*))
 all-epub-files: $(patsubst repositories/%,%.epub-FILES,$(wildcard repositories/*))
 
 all-mobi: $(patsubst repositories/%,%.mobi,$(wildcard repositories/*))
+
+all-html: $(patsubst repositories/%,%.html,$(wildcard repositories/*))
 
 %.tex: repositories/%
 	python ../doc2latex.py $< $@
@@ -36,13 +38,17 @@ all-mobi: $(patsubst repositories/%,%.mobi,$(wildcard repositories/*))
 %.mobi: %.epub
 	ebook-convert $< $@
 
+%.html: repositories/%
+	python ../doc2html.py $< $@
+
 clean:
 	rm -f *.aux *.log *.out *.toc
 
 mrproper: clean
 	rm -f *.tex *.pdf
 	rm -rf *.epub *.epub-FILES *.mobi
+	rm -f *.html
 
-.PHONY: default all all-latex all-pdf all-epub all-epub-files all-mobi clean mrproper
+.PHONY: default all all-latex all-pdf all-epub all-epub-files all-mobi all-html clean mrproper
 
 .PRECIOUS: %.tmp
