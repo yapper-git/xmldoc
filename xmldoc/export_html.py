@@ -20,17 +20,17 @@ def htmlspecialchars(text):
     return text
 
 
-class HeadersParser:
+class DocumentParser:
 
     def __init__(self):
         self.max_depth = 3
 
     def parse(self, root):
-        pattern = re.compile("^h\d$")  # matches h1, h2, etc.
-        self.counters = []
-        self.previous_level = 0
-        self.previous_navpoint = None
         self.navpoints = []
+        pattern = re.compile("^h\d$")  # matches h1, h2, etc.
+        self._counters = []
+        self._previous_level = 0
+        self._previous_navpoint = None
         for element in root:
             if pattern.search(element.tag):
                 self.parse_header(element)
@@ -44,12 +44,12 @@ class HeadersParser:
         navpoint = {}
 
         # id (for instance "toc-2.3")
-        if level > self.previous_level:
-            self.counters.append(0)
-        elif level < self.previous_level:
-            self.counters = self.counters[0:level]
-        self.counters[-1] += 1
-        navpoint['id'] = "toc-{}".format(".".join([str(x) for x in self.counters]))
+        if level > self._previous_level:
+            self._counters.append(0)
+        elif level < self._previous_level:
+            self._counters = self._counters[0:level]
+        self._counters[-1] += 1
+        navpoint['id'] = "toc-{}".format(".".join([str(x) for x in self._counters]))
         element.set('id', navpoint['id'])
 
         # title
@@ -61,14 +61,14 @@ class HeadersParser:
         # parent
         if level == 1:  # no parent
             navpoint['parent'] = None
-        elif level == self.previous_level:  # same parent as previous navpoint
-            navpoint['parent'] = self.previous_navpoint['parent']
-        elif level > self.previous_level:  # parent is the previous navpoint
-            navpoint['parent'] = self.previous_navpoint
-        elif level < self.previous_level:  # must rewind to find the correct parent
+        elif level == self._previous_level:  # same parent as previous navpoint
+            navpoint['parent'] = self._previous_navpoint['parent']
+        elif level > self._previous_level:  # parent is the previous navpoint
+            navpoint['parent'] = self._previous_navpoint
+        elif level < self._previous_level:  # must rewind to find the correct parent
             raise Exception('TODO')
-            navpoint['parent'] = self.previous_navpoint
-            for _ in range(self.previous_level - level + 1):
+            navpoint['parent'] = self._previous_navpoint
+            for _ in range(self._previous_level - level + 1):
                 navpoint['parent'] = navpoint['parent']['parent']
 
         if navpoint['parent'] == None:
@@ -76,8 +76,8 @@ class HeadersParser:
         else:
             navpoint['parent']['children'].append(navpoint)
 
-        self.previous_level = level
-        self.previous_navpoint = navpoint
+        self._previous_level = level
+        self._previous_navpoint = navpoint
 
 
 class ContentsRenderer:
@@ -222,12 +222,16 @@ class HtmlExporter:
     }
 
     def run(self, document):
-        toc_title = self.contents_i18n[document.manifest['lang']]  # FIXME
+        docparser = DocumentParser()
+        docparser.parse(document.root)
+        navpoints = docparser.navpoints
 
-        headers_parser = HeadersParser()
-        headers_parser.parse(document.root)
-        toc_render = ContentsRenderer().render(headers_parser.navpoints)
+        prefix = " " * 12
+        output = prefix
+        if len(navpoints) != 0:
+            toc_title = self.contents_i18n[document.manifest['lang']]  # FIXME KeyError?
+            output += "<h2>" + toc_title + "</h2>\n"
+            output += ContentsRenderer.render(navpoints) + "\n"
+        output += HtmlRenderer().run(document.root)
 
-        body_render = HtmlRenderer().run(document.root)
-
-        return toc_title + '\n\n' + toc_render + '\n\n' + body_render
+        return output.replace("\n", "\n" + prefix)
