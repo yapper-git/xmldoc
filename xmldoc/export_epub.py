@@ -1,9 +1,24 @@
-from jinja2 import Environment, FileSystemLoader
 import os
+import re
 
+from jinja2 import Environment, FileSystemLoader
 from epub2 import EpubBuilder, EpubNavPoint
 
 from xmldoc.renderer import Renderer
+
+replacements = [
+    ('&', '&amp;'),  # order matters
+    ('<', '&lt;'),
+    ('>', '&gt;'),
+    # ('"', '&quot;'),
+    # ("'", '&apos;'),
+]
+
+
+def htmlspecialchars(text):
+    for old, new in replacements:
+        text = text.replace(old, new)
+    return text
 
 
 class EpubRenderer(Renderer):
@@ -19,7 +34,10 @@ class EpubRenderer(Renderer):
     def header(self, element):
         text = self.inline(element)
         level = int(element.tag[1])
-        return '<h{0}>{1}</h{0}>\n'.format(level, text)
+        if 'id' in element.attrib:
+            return '<h{0} id="{2}">{1}</h{0}>\n'.format(level, text, element.attrib['id'])
+        else:
+            return '<h{0}>{1}</h{0}>\n'.format(level, text)
 
     def paragraph(self, element):
         text = self.inline(element)
@@ -120,6 +138,96 @@ class EpubRenderer(Renderer):
 Renderer.register(EpubRenderer)
 
 
+class DocumentParser:
+
+    def __init__(self):
+        self.max_depth = 3
+        self._pattern = re.compile("^h\d$")  # matches h1, h2, etc.
+
+    def parse(self, root):
+        self._parse_setup_sections(root)
+        self._parse_setup_navpoints()
+        for element in root:
+            if self._pattern.search(element.tag):
+                level = int(element.tag[1])
+                if level == 1:
+                    self._parse_header_sections(element)
+                if level <= self.max_depth:
+                    self._parse_header_navpoints(element, level)
+            self.section_list[-1]['nodes'].append(element)
+
+    def _parse_setup_sections(self, root):
+        self.section_list = []
+        self._section_number = 0
+        first_node = root.find('*')  # FIXME if None?
+        if first_node.tag != 'h1':
+            self.section_list.append({
+                'id': 'section-0',
+                'title': 'Introduction',  # FIXME i18n FIXME suitable expression?
+                'nodes': []
+            })
+
+    def _parse_setup_navpoints(self):
+        self.navpoints = []
+        self._section_number = 0
+        self._counters = []
+        self._previous_level = 0
+        self._previous_navpoint = None
+
+    def _parse_header_sections(self, element):
+        self._section_number += 1
+        self.section_list.append({
+            'id': 'section-{}'.format(self._section_number),
+            'title': element.text,  # FIXME self.inline does no longer exists
+            'nodes': []
+        })
+
+    def _parse_header_navpoints(self, element, level):
+        navpoint = EpubNavPoint()
+        navpoint.parent = None  # FIXME hack undefined…
+
+        # id (e.g. "section-2.3") and source (e.g. "texts/section-2.xhtml#toc-3"
+        if level > self._previous_level:
+            self._counters.append(0)
+        elif level < self._previous_level:
+            self._counters = self._counters[0:level]
+        self._counters[-1] += 1
+        navpoint.id = "section-{}".format(".".join([str(x) for x in self._counters]))
+        if level != 1:
+            element.set('id', "toc-{}".format(".".join([str(x) for x in self._counters[1:]])))
+
+        # source
+        navpoint.source = "texts/section-{}.xhtml".format(self._section_number)
+        if level != 1:
+            navpoint.source += "#{}".format(element.get("id"))
+
+        # title
+        navpoint.label = htmlspecialchars(Renderer.strip(element))  # FIXME OK?
+
+        # children
+        navpoint.children = []
+
+        # parent
+        if level == 1:  # no parent
+            navpoint.parent = None
+        elif level == self._previous_level:  # same parent as previous navpoint
+            navpoint.parent = self._previous_navpoint.parent
+        elif level > self._previous_level:  # parent is the previous navpoint
+            navpoint.parent = self._previous_navpoint
+        elif level < self._previous_level:  # must rewind to find the correct parent
+            navpoint.parent = self._previous_navpoint
+            for _ in range(self._previous_level - level + 1):
+                navpoint.parent = navpoint.parent.parent
+
+        if navpoint.parent is None:
+            self.navpoints.append(navpoint)
+        else:
+            navpoint.parent.children.append(navpoint)
+
+        self._previous_level = level
+        self._previous_navpoint = navpoint
+
+
 class EpubExporter:
 
     contents_i18n = {
@@ -129,6 +237,9 @@ class EpubExporter:
     }
 
     def run(self, document, filename):
+        docparser = DocumentParser()
+        docparser.parse(document.root)
+
         identifier = 'uuid'  # FIXME
         lang = document.manifest['lang']
         title = document.manifest['title']
@@ -141,89 +252,53 @@ class EpubExporter:
         )
         env = Environment(loader=FileSystemLoader(templates_folder))
 
-        epub = EpubBuilder(filename)
-        epub.identifier = identifier
-        epub.title = title
-        epub.metadata.add_language(lang)
-        epub.open()
+        self.epub = EpubBuilder(filename)
+        self.epub.identifier = identifier
+        self.epub.title = title
+        self.epub.metadata.add_language(lang)
+        self.epub.open()
+
+        # add navpoints
+        for navpoint in docparser.navpoints:
+            self.epub.add_navpoint(navpoint)
 
         # titlepage
         template = env.get_template('epub_titlepage.xhtml')
-        epub.add_text_from_string(
+        self.epub.add_text_from_string(
             'texts/titlepage.xhtml',
             template.render(lang=lang, title=title, subtitle=subtitle, authors=', '.join(authors)),
             'titlepage'
         )
         template = env.get_template('epub_titlepage_style.css')
-        epub.add_style_from_string('styles/titlepage.css', template.render(), 'style_titlepage')
-        epub.add_guide("title-page", "Title page", "texts/titlepage.xhtml")
-
-        # add navpoints for h1
-        number = 1
-        for element in document.root:
-            if element.tag == 'h1':
-                navpoint = EpubNavPoint()
-                navpoint.id = 'section-{}'.format(number)
-                navpoint.label = Renderer.strip(element)
-                navpoint.source = 'texts/section-{}.xhtml'.format(number)
-                epub.add_navpoint(navpoint)
-                number += 1
+        self.epub.add_style_from_string('styles/titlepage.css', template.render(), 'style_titlepage')
+        self.epub.add_guide("title-page", "Title page", "texts/titlepage.xhtml")
 
         # contents
         contents_title = self.contents_i18n[lang]
         template = env.get_template('epub_contents.xhtml')
-        epub.add_text_from_string(
+        self.epub.add_text_from_string(
             'texts/contents.xhtml',
-            template.render(lang=lang, title=contents_title, navpoints=epub.navpoints),
+            template.render(lang=lang, title=contents_title, navpoints=self.epub.navpoints),
             'contents'
         )
-        epub.add_guide("contents", contents_title, "texts/contents.xhtml")
+        self.epub.add_guide("contents", contents_title, "texts/contents.xhtml")
 
-        # main pages
+        # add pages
         renderer = EpubRenderer()
         template = env.get_template('epub_main.xhtml')
-        section_list = self.split_pages(document)
-        for section in section_list:
-            epub.add_text_from_string(
+        for section in docparser.section_list:
+            self.epub.add_text_from_string(
                 'texts/{}.xhtml'.format(section['id']),
                 template.render(
                     lang=lang,
                     title=section['title'],
-                    content=renderer.run(section['nodes'])  # FIXME indent?
+                    content=renderer.run(section['nodes']).rstrip().replace("\n", "\n    ")  # FIXME indent?
                 ),
                 section['id']
             )
 
         # add main.css
         template = env.get_template('epub_style.css')
-        epub.add_style_from_string('styles/main.css', template.render(), 'style_main')
+        self.epub.add_style_from_string('styles/main.css', template.render(), 'style_main')
 
-        epub.close()
-
-    def split_pages(self, document):
-        section_number = 0
-        section_list = []
-
-        # add section-0 if document does not start with <h1>
-        first_node = document.root.find('*')
-        if first_node.tag != 'h1':
-            section_list.append({
-                'id': 'section-0',
-                'title': 'Introduction',  # FIXME i18n FIXME exact expression
-                'nodes': []
-            })
-
-        for element in document.root:
-            # create new section
-            if element.tag == 'h1':
-                section_number += 1
-                section_list.append({
-                    'id': 'section-{}'.format(section_number),
-                    'title': element.text,  # FIXME self.inline does no longer exists
-                    'nodes': []
-                })
-
-            # add element in the current section
-            section_list[-1]['nodes'].append(element)
-
-        return section_list
+        self.epub.close()

@@ -5,18 +5,11 @@ from xmldoc.renderer import Renderer
 
 tab = "  "
 
-replacements = [
-    ('&', '&amp;'),  # order matters
-    ('<', '&lt;'),
-    ('>', '&gt;'),
-    # ('"', '&quot;'),
-    # ("'", '&apos;'),
-]
-
 
 def htmlspecialchars(text):
-    for old, new in replacements:
-        text = text.replace(old, new)
+    text = text.replace('&', '&amp;')
+    text = text.replace('<', '&lt;').replace('>', '&gt;')
+    # text = text.replace('"', '&quot;').replace("'", '&apos;')
     return text
 
 
@@ -24,6 +17,7 @@ class DocumentParser:
 
     def __init__(self):
         self.max_depth = 3
+        self._html_renderer = HtmlRenderer()
 
     def parse(self, root):
         self.navpoints = []
@@ -53,7 +47,7 @@ class DocumentParser:
         element.set('id', navpoint['id'])
 
         # title
-        navpoint['title'] = Renderer.strip(element)
+        navpoint['title'] = self._html_renderer.inline(element)
 
         # children
         navpoint['children'] = []
@@ -66,7 +60,6 @@ class DocumentParser:
         elif level > self._previous_level:  # parent is the previous navpoint
             navpoint['parent'] = self._previous_navpoint
         elif level < self._previous_level:  # must rewind to find the correct parent
-            raise Exception('TODO')
             navpoint['parent'] = self._previous_navpoint
             for _ in range(self._previous_level - level + 1):
                 navpoint['parent'] = navpoint['parent']['parent']
@@ -90,7 +83,7 @@ class ContentsRenderer:
     def render_recursive(cls, navpoints, level):
         output = (tab * level) + "<ul>\n"
         for navpoint in navpoints:
-            title = '<a href="#{}">{}</a>'.format(navpoint['id'], htmlspecialchars(navpoint['title']))
+            title = '<a href="#{}">{}</a>'.format(navpoint['id'], navpoint['title'])
             if len(navpoint['children']) == 0:
                 output += (tab * (level + 1)) + "<li>" + title + "</li>\n"
             else:
