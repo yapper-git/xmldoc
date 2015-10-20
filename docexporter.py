@@ -9,7 +9,8 @@ from argparse import ArgumentParser
 from xmldoc.document import DocumentDir
 
 parser = ArgumentParser(description=__doc__)
-parser.add_argument("-f", "--format", help="export format", default='epub', choices=['epub', 'html', 'latex'])
+parser.add_argument("-f", "--format", help="export format", default='epub',
+                    choices=['epub', 'html', 'latex', 'markdown'])
 parser.add_argument("input", help="path to document repository")
 parser.add_argument("output", help="path to output file")
 args = parser.parse_args()
@@ -24,3 +25,8 @@ elif args.format == 'html':
 elif args.format == 'latex':
     with open(args.output, "w") as output_file:
         output_file.write(document.export_latex())
+elif args.format == 'markdown':
+    with open(args.output, "w") as output_file:
+        output_file.write(document.export_markdown())
+else:
+    raise NotImplementedError
