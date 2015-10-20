@@ -190,5 +190,6 @@ class LatexExporter:
             subtitle=document.manifest['subtitle'],
             authors=', '.join(document.manifest['authors']),
             packages=packages,
+            contents=document.root.find('h1') is not None,
             main_content=main_content,
         )

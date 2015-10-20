@@ -274,14 +274,15 @@ class EpubExporter:
         self.epub.add_guide("title-page", "Title page", "texts/titlepage.xhtml")
 
         # contents
-        contents_title = self.contents_i18n[lang]
-        template = env.get_template('epub_contents.xhtml')
-        self.epub.add_text_from_string(
-            'texts/contents.xhtml',
-            template.render(lang=lang, title=contents_title, navpoints=self.epub.navpoints),
-            'contents'
-        )
-        self.epub.add_guide("contents", contents_title, "texts/contents.xhtml")
+        if docparser.navpoints:
+            contents_title = self.contents_i18n[lang]
+            template = env.get_template('epub_contents.xhtml')
+            self.epub.add_text_from_string(
+                'texts/contents.xhtml',
+                template.render(lang=lang, title=contents_title, navpoints=self.epub.navpoints),
+                'contents'
+            )
+            self.epub.add_guide("contents", contents_title, "texts/contents.xhtml")
 
         # add pages
         renderer = EpubRenderer()
