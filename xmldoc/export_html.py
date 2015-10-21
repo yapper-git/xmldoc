@@ -114,7 +114,7 @@ class HtmlRenderer(Renderer):
         if align == 'left':
             return '<p>{}</p>\n'.format(text)
         else:
-            return '<p class="{}">{}</p>\n'.format(align, text)
+            return '<p class="align-{}">{}</p>\n'.format(align, text)
 
     def blockquote(self, element):
         output = '<blockquote>\n'
@@ -134,7 +134,7 @@ class HtmlRenderer(Renderer):
         if list_type == 'decimal':
             output = '<ol>\n'
         else:
-            output = '<ol class="{}">\n'.format(list_type)
+            output = '<ol style="list-style-type: {}">\n'.format(list_type)
         output += self.list(element)
         output += '</ol>\n'
         return output
@@ -166,7 +166,7 @@ class HtmlRenderer(Renderer):
         return output
 
     def table(self, element):
-        output = '<table>\n'
+        output = '<table class="ink-table alternating bordered">\n'
         for row_element in element:
             output += tab + '<tr>\n'
             for cell_element in row_element:
