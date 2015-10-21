@@ -223,7 +223,7 @@ class HtmlExporter:
         output = prefix
         if len(navpoints) != 0:
             toc_title = self.contents_i18n[document.manifest['lang']]  # FIXME KeyError?
-            output += "<h3>" + toc_title + "</h3>\n"
+            output += '<h3 id="toc">' + toc_title + "</h3>\n"
             output += ContentsRenderer.render(navpoints) + "\n"
             output += "<hr/>\n"
         output += HtmlRenderer().run(document.root)
