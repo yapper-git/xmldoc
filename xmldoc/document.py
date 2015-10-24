@@ -15,12 +15,13 @@ from xmldoc.export_latex import LatexExporter
 
 class VersionedDocument:
 
+    @staticmethod
+    def init_repo(repo_path, bare=False):
+        pygit2.init_repository(repo_path)
+
     def __init__(self, repo_path):
         self.repo_path = repo_path
-        try:
-            self.repo = pygit2.Repository(repo_path)
-        except KeyError:
-            self.repo = pygit2.init_repository(self.repo_path, bare=False)
+        self.repo = pygit2.Repository(repo_path)
 
     def snapshot(self, version):
         return DocumentSnapshot(self.repo, self.get_commit(version))
