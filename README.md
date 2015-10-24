@@ -12,5 +12,5 @@ Tools to manage own documents.
 - lualatex (texlive-latexextra, texlive-fontsextra)
 
 ```bash
-pip install jinja2 lxml -e git://github.com/yapper-git/python-epub2.git#egg=python-epub2
+pip install -e git://github.com/yapper-git/xmldoc.git#egg=xmldoc
 ```
