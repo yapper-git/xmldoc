@@ -42,7 +42,7 @@ class VersionedDocument:
     def set_manifest(self, manifest):
         self.set_file_content(
             'manifest.json',
-            json.dumps(manifest, indent=4, sort_keys=True)
+            json.dumps(manifest, indent=4, sort_keys=True, ensure_ascii=False)
         )
 
     def get_manifest(self):
