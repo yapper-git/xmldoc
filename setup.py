@@ -7,4 +7,6 @@ setup(
     version='0.1',
     py_modules=['xmldoc'],
     install_requires=['jinja2', 'lxml'],
+    description='Tools to manage own XML format for documents',
+    url='https://github.com/yapper-git/xmldoc',
 )
