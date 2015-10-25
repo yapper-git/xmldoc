@@ -30,46 +30,55 @@ class DocumentParser:
                 self.parse_header(element)
 
     def parse_header(self, element):
-        level = int(element.tag[1])
+        self._level = int(element.tag[1])
 
-        if level > self.max_depth:
-            return
+        # update counters (e.g. [2, 3] or [2, 3, 1, 4])
+        if self._level > self._previous_level:
+            self._counters.append(0)
+        elif self._level < self._previous_level:
+            self._counters = self._counters[0:self._level]
+        self._counters[-1] += 1
+        self._anchor = "toc-{}".format(".".join([str(x) for x in self._counters]))
 
+        # set header ID (e.g. id="toc-2.3")
+        element.set('id', self._anchor)
+
+        # add navpoint (only if it )
+        if self._level <= self.max_depth:
+            self._parse_header_navpoint(element)
+
+        self._previous_level = self._level
+
+    def _parse_header_navpoint(self, element):
         navpoint = {}
 
-        # id (for instance "toc-2.3")
-        if level > self._previous_level:
-            self._counters.append(0)
-        elif level < self._previous_level:
-            self._counters = self._counters[0:level]
-        self._counters[-1] += 1
-        navpoint['id'] = "toc-{}".format(".".join([str(x) for x in self._counters]))
-        element.set('id', navpoint['id'])
+        # set id (for instance "toc-2.3")
+        navpoint['id'] = self._anchor
 
-        # title
+        # set title
         navpoint['title'] = self._html_renderer.inline(element)
 
-        # children
+        # set children
         navpoint['children'] = []
 
-        # parent
-        if level == 1:  # no parent
+        # set parent
+        if self._level == 1:  # no parent
             navpoint['parent'] = None
-        elif level == self._previous_level:  # same parent as previous navpoint
+        elif self._level == self._previous_level:  # same parent as previous navpoint
             navpoint['parent'] = self._previous_navpoint['parent']
-        elif level > self._previous_level:  # parent is the previous navpoint
+        elif self._level > self._previous_level:  # parent is the previous navpoint
             navpoint['parent'] = self._previous_navpoint
-        elif level < self._previous_level:  # must rewind to find the correct parent
+        elif self._level < self._previous_level:  # must rewind to find the correct parent
             navpoint['parent'] = self._previous_navpoint
-            for _ in range(self._previous_level - level + 1):
+            for _ in range(self._previous_level - self._level + 1):
                 navpoint['parent'] = navpoint['parent']['parent']
 
+        # add navpoint either to root list or to its parent
         if navpoint['parent'] == None:
             self.navpoints.append(navpoint)
         else:
             navpoint['parent']['children'].append(navpoint)
 
-        self._previous_level = level
         self._previous_navpoint = navpoint
 
 
