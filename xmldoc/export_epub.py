@@ -158,13 +158,6 @@ class DocumentParser:
                 'title': 'Introduction',  # FIXME i18n FIXME suitable expression?
                 'nodes': []
             })
-            navpoint = EpubNavPoint()
-            navpoint.id = 'section-0'
-            navpoint.source = 'texts/section-0.xhtml'
-            navpoint.label = 'Introduction'
-            navpoint.parent = None
-            navpoint.children = []
-            self.navpoints.append(navpoint)
 
     def _parse_setup_navpoints(self):
         self.navpoints = []
@@ -258,8 +251,15 @@ class EpubExporter:
         self.epub.open()
 
         # add navpoints
-        for navpoint in docparser.navpoints:
-            self.epub.add_navpoint(navpoint)
+        if len(docparser.navpoints) == 0:  # add one navpoint if none (else invalid)
+            self.epub.add_navpoint(EpubNavPoint(
+                id='section-0',
+                source='texts/section-0.xhtml',
+                label='Contents',  # FIXME i18n
+            ))
+        else:
+            for navpoint in docparser.navpoints:
+                self.epub.add_navpoint(navpoint)
 
         # titlepage
         template = env.get_template('epub_titlepage.xhtml')
