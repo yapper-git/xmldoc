@@ -137,8 +137,8 @@ class DocumentParser:
         self._pattern = re.compile("^h\d$")  # matches h1, h2, etc.
 
     def parse(self, root):
-        self._parse_setup_sections(root)
         self._parse_setup_navpoints()
+        self._parse_setup_sections(root)
         for element in root:
             if self._pattern.search(element.tag):
                 level = int(element.tag[1])
@@ -158,6 +158,13 @@ class DocumentParser:
                 'title': 'Introduction',  # FIXME i18n FIXME suitable expression?
                 'nodes': []
             })
+            navpoint = EpubNavPoint()
+            navpoint.id = 'section-0'
+            navpoint.source = 'texts/section-0.xhtml'
+            navpoint.label = 'Introduction'
+            navpoint.parent = None
+            navpoint.children = []
+            self.navpoints.append(navpoint)
 
     def _parse_setup_navpoints(self):
         self.navpoints = []
