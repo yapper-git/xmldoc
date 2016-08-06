@@ -9,6 +9,25 @@ class Validator:
     XML_SCHEMA = "extract.xsd"
 
     @classmethod
+    def reorganize_headers(cls, content):
+        root = etree.fromstring(content)
+
+        # retrieve all headers in a list
+        headings = root.xpath('.//h1|.//h2|.//h3|.//h4|.//h5|.//h6')
+
+        # get top level
+        top_level = int(headings[0].tag[1])
+        offset = top_level - 1
+
+        # for each header decrement its if required
+        if offset != 0:
+            for header in headings:
+                level = int(header.tag[1])
+                header.tag = 'h' + str(level - offset)
+
+        return etree.tostring(root, encoding="utf-8").decode()
+
+    @classmethod
     def document_validation(cls, path):
         manifest_path = os.path.join(path, 'manifest.json')
         text_path = os.path.join(path, 'text.xml')
@@ -28,7 +47,7 @@ class Validator:
         xsd_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), cls.XML_SCHEMA)
         xsd_tree = etree.parse(xsd_path)
 
-        xml_tree = etree.fromstring(content.encode())
+        xml_tree = etree.fromstring(content)
         xmlschema = etree.XMLSchema(xsd_tree)
         xmlschema.assertValid(xml_tree)
 
