@@ -43,6 +43,11 @@ class LatexRenderer(Renderer):
 
     def paragraph(self, element):
         text = self.inline(element)
+
+        # Fix error if content starts with a newline without content before
+        if text.startswith(r'\newline'):
+            text = '~ ' + text
+
         align = element.get('align', 'left')
         if align == 'left':
             return '%s\n\n' % text
