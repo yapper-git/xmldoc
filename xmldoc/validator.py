@@ -15,7 +15,9 @@ class Validator:
         # retrieve all headers in a list
         headings = root.xpath('.//h1|.//h2|.//h3|.//h4|.//h5|.//h6')
 
-        # get top level
+        # get top level if exists
+        if len(headings) == 0:
+            return content
         top_level = int(headings[0].tag[1])
         offset = top_level - 1
 
