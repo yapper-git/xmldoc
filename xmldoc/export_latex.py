@@ -60,7 +60,7 @@ class LatexRenderer(Renderer):
     def blockquote(self, element):
         output = '\\begin{quotation}\n'
         for child_element in element:
-            output += self.paragraph(child_element)
+            output += "\\noindent\n" + self.paragraph(child_element) + "~\n\n"
         output = output.rstrip() + '\n'
         output += '\\end{quotation}\n\n'
         return output

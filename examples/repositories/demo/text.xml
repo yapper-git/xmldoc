@@ -49,14 +49,49 @@
 
   <!-- Blockquotes -->
   <h1>3. Blockquotes</h1>
+  <h2>3.1. Newlines in paragraphs</h2>
   <blockquote>
     <p>
+      Eodem tempore Serenianus ex duce, cuius ignavia<br/>
+      Vita est illis semper in fuga uxoresque<br/>
+      Haec ubi latius fama vulgasset missaeque<br/>
+      Coactique aliquotiens nostri pedites ad eos
+    </p>
+    <p>
+      Procedente igitur mox tempore cum adventicium<br/>
+      Accedat huc suavitas quaedam oportet sermonum<br/>
+      Metuentes igitur idem latrones Lycaoniam magna<br/>
+      Illud tamen te esse admonitum volo, primum ut<br/>
+    </p>
+    <p>
+      Cum haec taliaque sollicitas eius aures<br/>
+      Atque, ut Tullius ait, ut etiam ferae fame monitae<br/>
+      Quod si rectum statuerimus vel concedere amicis,<br/>
+      Hac ita persuasione reducti intra moenia
+    </p>
+    <p>
+      Alios autem dicere aiunt multo etiam inhumanius<br/>
+      Et quia Mesopotamiae tractus omnes crebro<br/>
+      Rogatus ad ultimum admissusque in consistorium<br/>
+      Ego vero sic intellego, Patres conscripti, nos hoc
+    </p>
+  </blockquote>
+  <h2>3.2. Alignment in paragraphs</h2>
+  <blockquote>
+    <p>
+      Et interdum acciderat, ut siquid in penetrali secreto nullo citerioris
+      vitae ministro praesente paterfamilias uxori susurrasset in aurem, velut
+      Amphiarao referente aut Marcio, quondam vatibus inclitis, postridie
+      disceret imperator. ideoque etiam parietes arcanorum soli conscii
+      timebantur.
+    </p>
+    <p align="center">
       Ut enim benefici liberalesque sumus, non ut exigamus gratiam (neque enim
       beneficium faeneramur sed natura propensi ad liberalitatem sumus), sic
       amicitiam non spe mercedis adducti sed quod omnis eius fructus in ipso
       amore inest, expetendam putamus.
     </p>
-    <p>
+    <p align="right">
       Proinde concepta rabie saeviore, quam desperatio incendebat et fames,
       amplificatis viribus ardore incohibili in excidium urbium matris Seleuciae
       efferebantur, quam comes tuebatur Castricius tresque legiones bellicis
