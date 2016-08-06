@@ -77,7 +77,7 @@ class DocumentParser:
                 navpoint['parent'] = navpoint['parent']['parent']
 
         # add navpoint either to root list or to its parent
-        if navpoint['parent'] == None:
+        if navpoint['parent'] is None:
             self.navpoints.append(navpoint)
         else:
             navpoint['parent']['children'].append(navpoint)
