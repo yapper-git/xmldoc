@@ -152,9 +152,7 @@ class DocumentParser:
         self.section_list = []
         self._section_number = 0
         first_node = root.find('*')
-        if not first_node:  # break if no nodes
-            return
-        if first_node.tag != 'h1':
+        if not first_node or first_node.tag != 'h1':
             self.section_list.append({
                 'id': 'section-0',
                 'title': 'Introduction',  # FIXME i18n FIXME suitable expression?
