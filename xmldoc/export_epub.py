@@ -23,14 +23,6 @@ def htmlspecialchars(text):
 
 class EpubRenderer(Renderer):
 
-    replacements = [
-        ('&', '&amp;'),
-        ('<', '&lt;'),
-        ('>', '&gt;'),
-        # ('"', '&quot;'),
-        # ("'", '&apos;'),
-    ]
-
     def header(self, element):
         text = self.inline(element)
         level = int(element.tag[1])
@@ -113,7 +105,7 @@ class EpubRenderer(Renderer):
         return output
 
     def text(self, text):
-        for old, new in self.replacements:
+        for old, new in replacements:
             text = text.replace(old, new)
         return text
 
@@ -159,7 +151,9 @@ class DocumentParser:
     def _parse_setup_sections(self, root):
         self.section_list = []
         self._section_number = 0
-        first_node = root.find('*')  # FIXME if None?
+        first_node = root.find('*')
+        if not first_node:  # break if no nodes
+            return
         if first_node.tag != 'h1':
             self.section_list.append({
                 'id': 'section-0',
