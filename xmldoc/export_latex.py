@@ -173,7 +173,7 @@ Renderer.register(LatexRenderer)
 class LatexExporter:
 
     @staticmethod
-    def run(document):
+    def run(document, url_href, url_title):
         renderer = LatexRenderer()
         main_content = renderer.run(document.root)
         packages = renderer.packages
@@ -192,4 +192,6 @@ class LatexExporter:
             packages=packages,
             contents=document.root.find('h1') is not None,
             main_content=main_content,
+            url_href=url_href,
+            url_title=url_title,
         )

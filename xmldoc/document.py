@@ -85,8 +85,8 @@ class DocumentMixin:
     def export_html(self):
         return HtmlExporter().run(self)
 
-    def export_latex(self):
-        return LatexExporter().run(self)
+    def export_latex(self, url_href='http://www.example.com', url_title='www.example.com'):
+        return LatexExporter().run(self, url_href, url_title)
 
 
 class DocumentSnapshot(DocumentMixin):
