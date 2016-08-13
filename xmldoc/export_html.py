@@ -70,8 +70,6 @@ class DocumentParser:
         elif self._level > previous_level:  # parent is the previous navpoint
             navpoint['parent'] = self._previous_navpoint
         elif self._level < previous_level:  # must rewind to find the correct parent
-            print(self._counters)
-            print("{} → {}".format(self._level, previous_level))
             navpoint['parent'] = self._previous_navpoint
             for _ in range(previous_level - self._level + 1):
                 navpoint['parent'] = navpoint['parent']['parent']
