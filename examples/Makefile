@@ -4,7 +4,7 @@ PDFLATEX = lualatex -interaction nonstopmode -halt-on-error -file-line-error
 
 default: all
 
-all: all-epub all-epub-files all-mobi all-html all-latex all-pdf
+all: all-epub all-epub-files all-mobi all-html all-latex all-pdf all-md
 
 all-epub: $(patsubst repositories/%,%.epub,$(wildcard repositories/*))
 all-epub-files: $(patsubst repositories/%,%.epub-FILES,$(wildcard repositories/*))
@@ -14,6 +14,8 @@ all-html: $(patsubst repositories/%,%.html,$(wildcard repositories/*))
 
 all-latex: $(patsubst repositories/%,%.tex,$(wildcard repositories/*))
 all-pdf: $(patsubst repositories/%,%.pdf,$(wildcard repositories/*))
+
+all-md: $(patsubst repositories/%,%.md,$(wildcard repositories/*))
 
 
 %.epub: repositories/%
@@ -42,6 +44,10 @@ all-pdf: $(patsubst repositories/%,%.pdf,$(wildcard repositories/*))
 	#exiftool -Title="This is the Title" -Author="Happy Man" -Subject="This is the Subject" -Creator="mysite.com" -Producer="" $@
 
 
+%.md: repositories/%
+	python ../docexporter.py -f markdown $< $@
+
+
 clean:
 	rm -f *.aux *.log *.out *.toc
 
@@ -49,7 +55,8 @@ mrproper: clean
 	rm -rf *.epub *.epub-FILES *.mobi
 	rm -f *.html
 	rm -f *.tex *.pdf
+	rm -f *.md
 
-.PHONY: default all all-epub all-epub-files all-mobi all-html all-latex all-pdf clean mrproper
+.PHONY: default all all-epub all-epub-files all-mobi all-html all-latex all-pdf all-md clean mrproper
 
 .PRECIOUS: %.tmp

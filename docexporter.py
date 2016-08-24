@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Converts document repository to another format (EPUB2/HTML/LaTeX).
+Converts document repository to another format (EPUB2/HTML/LaTeX/Markdown).
 """
 
 from argparse import ArgumentParser

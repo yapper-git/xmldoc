@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 from xmldoc.export_epub import EpubExporter
 from xmldoc.export_html import HtmlExporter
 from xmldoc.export_latex import LatexExporter
+from xmldoc.export_markdown import MarkdownExporter
 
 
 # revparse_single raises:
@@ -87,6 +88,9 @@ class DocumentMixin:
 
     def export_latex(self, url_href='http://www.example.com', url_title='www.example.com'):
         return LatexExporter().run(self, url_href, url_title)
+
+    def export_markdown(self):
+        return MarkdownExporter().run(self)
 
 
 class DocumentSnapshot(DocumentMixin):
