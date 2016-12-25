@@ -172,6 +172,7 @@ class LatexRenderer(Renderer):
         self.usepackage('color,soul')
         return r'\hl{%s}' % text
 
+
 Renderer.register(LatexRenderer)
 
 

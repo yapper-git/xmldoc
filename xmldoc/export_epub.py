@@ -127,6 +127,7 @@ class EpubRenderer(Renderer):
     def highlight(self, text):
         return '<span class="mark">{}</span>'.format(text)
 
+
 Renderer.register(EpubRenderer)
 
 

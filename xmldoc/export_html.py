@@ -108,7 +108,7 @@ class ContentsRenderer:
 class HtmlRenderer(Renderer):
 
     def __init__(self):
-        self.headers_offset = 0
+        self.headers_offset = 2
 
     def header(self, element):
         text = self.inline(element)
@@ -212,6 +212,7 @@ class HtmlRenderer(Renderer):
 
     def highlight(self, text):
         return '<mark>{}</mark>'.format(text)
+
 
 Renderer.register(HtmlRenderer)
 

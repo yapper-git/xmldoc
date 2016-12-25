@@ -69,6 +69,7 @@ class MarkdownRenderer(Renderer):
     def highlight(self, text):
         return "<mark>{}</mark>".format(text)
 
+
 Renderer.register(MarkdownRenderer)
 
 
