@@ -91,17 +91,17 @@ class ContentsRenderer:
 
     @classmethod
     def render_recursive(cls, navpoints, level):
-        output = (tab * level) + "<ul>\n"
+        output = (tab * level) + '<nav class="nav nav-pills flex-column">\n'
         for navpoint in navpoints:
-            title = '<a href="#{}">{}</a>'.format(navpoint['id'], navpoint['title'])
+            title = '<a class="nav-link ml-{}" href="#{}">{}</a>'.format(level/2+1, navpoint['id'], navpoint['title'])
             if len(navpoint['children']) == 0:
-                output += (tab * (level + 1)) + "<li>" + title + "</li>\n"
+                output += (tab * (level + 1)) + title + "\n"
             else:
-                output += (tab * (level + 1)) + "<li>\n"
+                #output += (tab * (level + 1)) + "<li>\n"
                 output += (tab * (level + 2)) + title + "\n"
                 output += cls.render_recursive(navpoint['children'], level + 2) + "\n"
-                output += (tab * (level + 1)) + "</li>\n"
-        output += (tab * level) + "</ul>"
+                #output += (tab * (level + 1)) + "</li>\n"
+        output += (tab * level) + "</nav>"
         return output
 
 
@@ -219,11 +219,11 @@ Renderer.register(HtmlRenderer)
 
 class HtmlExporter:
 
-    contents_i18n = {
-        'en': 'Table of Contents',
-        'fr': 'Table des matières',
-        'de': 'Inhaltsverzeichnis',
-    }
+    # contents_i18n = {
+    #     'en': 'Table of Contents',
+    #     'fr': 'Table des matières',
+    #     'de': 'Inhaltsverzeichnis',
+    # }
 
     def run(self, document):
         docparser = DocumentParser()
@@ -233,10 +233,8 @@ class HtmlExporter:
         prefix = " " * 12
         output = prefix
         if len(navpoints) != 0:
-            toc_title = self.contents_i18n[document.manifest['lang']]  # FIXME KeyError?
-            output += '<h3 id="toc">' + toc_title + "</h3>\n"
             output += ContentsRenderer.render(navpoints) + "\n"
-            output += "<hr/>\n"
-        output += HtmlRenderer().run(document.root)
+        output2 = prefix
+        output2 += HtmlRenderer().run(document.root)
 
-        return output.replace("\n", "\n" + prefix)
+        return output.replace("\n", "\n" + prefix), output2.replace("\n", "\n" + prefix)
