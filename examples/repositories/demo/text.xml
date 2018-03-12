@@ -49,7 +49,7 @@
 
   <!-- Blockquotes -->
   <h1>3. Blockquotes</h1>
-  <h2>3.1. Newlines in paragraphs</h2>
+  <h2>3.1. Basic sample</h2>
   <blockquote>
     <p>
       Eodem tempore Serenianus ex duce, cuius ignavia<br/>
@@ -76,24 +76,24 @@
       Ego vero sic intellego, Patres conscripti, nos hoc
     </p>
   </blockquote>
-  <h2>3.2. Alignment in paragraphs</h2>
+  <h2>3.2. Complex sample</h2>
   <blockquote>
     <p>
-      Et interdum acciderat, ut siquid in penetrali secreto nullo citerioris
+      <i>Et</i> <b>interdum</b> <mark>acciderat</mark>, <sub>ut</sub> <sup>siquid</sup> in penetrali secreto nullo citerioris
       vitae ministro praesente paterfamilias uxori susurrasset in aurem, velut
       Amphiarao referente aut Marcio, quondam vatibus inclitis, postridie
       disceret imperator. ideoque etiam parietes arcanorum soli conscii
       timebantur.
     </p>
     <p align="center">
-      Ut enim benefici liberalesque sumus, non ut exigamus gratiam (neque enim
-      beneficium faeneramur sed natura propensi ad liberalitatem sumus), sic
+      Ut enim benefici liberalesque sumus, non ut exigamus gratiam <i>(neque enim
+      beneficium faeneramur sed <b>natura</b> propensi ad liberalitatem sumus)</i>, sic
       amicitiam non spe mercedis adducti sed quod omnis eius fructus in ipso
       amore inest, expetendam putamus.
     </p>
     <p align="right">
       Proinde concepta rabie saeviore, quam desperatio incendebat et fames,
-      amplificatis viribus ardore incohibili in excidium urbium matris Seleuciae
+      amplificatis viribus ardore <b><mark>incohibili</mark></b> in excidium urbium matris Seleuciae
       efferebantur, quam comes tuebatur Castricius tresque legiones bellicis
       sudoribus induratae.
     </p>
@@ -316,6 +316,6 @@
     </tr>
   </table>
   <h2>Unicode</h2>
+  <p>Accents : AÀÂÄ, EÉÈÊË, IÎÏ, OÔÖ, UÛÜ, YŶŸ, CÇ, ß, +−×÷, ~@%$£€</p>
   <p>Unicode smileys: 😀 😁 😂 😃 😄 😅 😆 😇 😈 😉 😊 😋 😌 😍 😎 😏 😐 😑 😒 😓 😔 😕 😖 😗 😘 😙 😚 😛 😜 😝 😞 😟 😠 😡 😢 😣</p>
-
 </extract>
