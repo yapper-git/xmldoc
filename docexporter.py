@@ -21,7 +21,7 @@ if args.format == 'epub':
     document.export_epub(args.output)
 elif args.format == 'html':
     with open(args.output, "w") as output_file:
-        output_file.write(document.export_html())
+        output_file.write("\n".join(document.export_html()))
 elif args.format == 'latex':
     with open(args.output, "w") as output_file:
         output_file.write(document.export_latex())
