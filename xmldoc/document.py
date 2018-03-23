@@ -60,8 +60,8 @@ class VersionedDocument:
         last = self.repo[self.repo.head.target]
         return self.repo.walk(last.id, pygit2.GIT_SORT_TOPOLOGICAL)
 
-    def git_diff(self, commit1, commit2):
-        return self.repo.diff(commit1, commit2)
+    def git_diff(self, commit1, commit2, context_lines=3):
+        return self.repo.diff(commit1, commit2, context_lines)
 
     def commit(self, user_name, user_email, message):
         index = self.repo.index
