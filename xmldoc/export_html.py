@@ -21,7 +21,7 @@ class DocumentParser:
 
     def parse(self, root):
         self.navpoints = []
-        pattern = re.compile("^h\d$")  # matches h1, h2, etc.
+        pattern = re.compile(r"^h\d$")  # matches h1, h2, etc.
         self._counters = []
         self._previous_level = 0
         self._previous_navpoint = None
@@ -97,10 +97,10 @@ class ContentsRenderer:
             if len(navpoint['children']) == 0:
                 output += (tab * (level + 1)) + title + "\n"
             else:
-                #output += (tab * (level + 1)) + "<li>\n"
+                # output += (tab * (level + 1)) + "<li>\n"
                 output += (tab * (level + 2)) + title + "\n"
                 output += cls.render_recursive(navpoint['children'], level + 2) + "\n"
-                #output += (tab * (level + 1)) + "</li>\n"
+                # output += (tab * (level + 1)) + "</li>\n"
         output += (tab * level) + "</nav>"
         return output
 

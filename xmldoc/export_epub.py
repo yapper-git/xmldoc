@@ -135,7 +135,7 @@ class DocumentParser:
 
     def __init__(self):
         self.max_depth = 3
-        self._pattern = re.compile("^h\d$")  # matches h1, h2, etc.
+        self._pattern = re.compile(r"^h\d$")  # matches h1, h2, etc.
 
     def parse(self, root):
         self._parse_setup_navpoints()
